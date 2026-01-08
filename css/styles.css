@@ -514,12 +514,21 @@ h1, h2, h3, h4, h5, h6 {
 /* ============================================
    Skills Section
    ============================================ */
+.skills {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+}
+
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
     width: 100%;
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
 }
 
 .skill-category {
@@ -560,6 +569,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .skill-list {
     list-style: none;
+    overflow: visible !important;
+    max-height: none !important;
 }
 
 .skill-list li {
@@ -568,6 +579,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
+    overflow: visible !important;
 }
 
 .skill-list i {
@@ -607,6 +619,9 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: var(--radius-lg);
     padding: var(--spacing-lg);
     margin-top: var(--spacing-lg);
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
 }
 
 .expertise-title {
@@ -619,6 +634,8 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-sm);
+    overflow: visible !important;
+    max-height: none !important;
 }
 
 .tag {
@@ -734,6 +751,9 @@ h1, h2, h3, h4, h5, h6 {
    ============================================ */
 .blog {
     background-color: var(--bg-light);
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
 }
 
 .blog-intro {
@@ -743,6 +763,7 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 700px;
     margin: 0 auto var(--spacing-xl);
     line-height: 1.8;
+    overflow: visible !important;
 }
 
 .blog-grid {
@@ -750,6 +771,9 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
     gap: var(--spacing-lg);
     width: 100%;
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
 }
 
 .blog-card {
@@ -899,6 +923,8 @@ h1, h2, h3, h4, h5, h6 {
     flex-wrap: wrap;
     gap: var(--spacing-xs);
     margin-bottom: var(--spacing-md);
+    overflow: visible !important;
+    max-height: none !important;
 }
 
 .blog-tag {
@@ -1169,6 +1195,20 @@ h1, h2, h3, h4, h5, h6 {
     .skills-grid {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
+        overflow: visible !important;
+        max-height: none !important;
+        height: auto !important;
+    }
+
+    .skill-category {
+        overflow: visible !important;
+        max-height: none !important;
+        height: auto !important;
+    }
+
+    .skill-list {
+        overflow: visible !important;
+        max-height: none !important;
     }
 
     .hero-cta {
@@ -1184,6 +1224,16 @@ h1, h2, h3, h4, h5, h6 {
     .blog-grid {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
+        overflow: visible !important;
+        max-height: none !important;
+        height: auto !important;
+    }
+
+    .blog-card {
+        overflow-x: hidden;
+        overflow-y: visible !important;
+        max-height: none !important;
+        height: auto !important;
     }
 
     .projects-grid {
@@ -1328,14 +1378,23 @@ h1, h2, h3, h4, h5, h6 {
 
     .skill-category {
         padding: var(--spacing-md);
+        overflow: visible !important;
+        max-height: none !important;
+        height: auto !important;
     }
 
     .skill-category h3 {
         font-size: 1.125rem;
     }
 
+    .skill-list {
+        overflow: visible !important;
+        max-height: none !important;
+    }
+
     .skill-list li {
         font-size: 0.9rem;
+        overflow: visible !important;
     }
 
     .category-icon {
@@ -1428,6 +1487,8 @@ h1, h2, h3, h4, h5, h6 {
 
     .blog-content {
         padding: var(--spacing-md);
+        overflow: visible !important;
+        max-height: none !important;
     }
 
     .blog-content h3 {
@@ -1442,10 +1503,13 @@ h1, h2, h3, h4, h5, h6 {
         flex-direction: column;
         gap: 0.5rem;
         font-size: 0.8rem;
+        overflow: visible !important;
     }
 
     .blog-tags {
         gap: 0.375rem;
+        overflow: visible !important;
+        max-height: none !important;
     }
 
     .blog-tag {
@@ -2184,7 +2248,8 @@ h1, h2, h3, h4, h5, h6 {
 .blog-search-container {
     width: 100%;
     max-width: 100%;
-    overflow: hidden;
+    overflow: visible !important;
+    max-height: none !important;
 }
 
 .blog-search {
@@ -2192,6 +2257,8 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: var(--spacing-md);
     width: 100%;
     max-width: 100%;
+    overflow: visible !important;
+    max-height: none !important;
 }
 
 .blog-search i {
