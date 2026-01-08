@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Confronto completo tra REST API e GraphQL nel 2026. Scopri vantaggi, svantaggi, performance e quando scegliere ciascuna tecnologia con esempi pratici e implementazioni Hasura.">
+    <meta name="keywords" content="REST API, GraphQL, API design, Hasura, backend development, API architecture, microservices, Node.js, performance API">
+    <meta name="author" content="Leonardo Pedron">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="REST API vs GraphQL: Quale Scegliere nel 2026?">
+    <meta property="og:description" content="Guida definitiva per scegliere tra REST API e GraphQL con esempi pratici di implementazione.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leonardopedron.github.io/blog-rest-api-vs-graphql.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="REST API vs GraphQL: Guida Completa 2026">
+    <meta name="twitter:description" content="Scopri quando usare REST o GraphQL con pattern di implementazione e best practices.">
+    <title>REST API vs GraphQL: Quale Scegliere nel 2026? | Leonardo Pedron</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        // Set theme immediately to avoid flash
+        const theme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+    </script>
+    <script src="js/i18n.js" defer></script>
+    <script src="js/interactive.js" defer></script>
+    <script src="js/blog-article.js" defer></script>
+
+    <style>
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-top: 100px;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .article-excerpt {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-tag {
+            background-color: rgba(14, 165, 233, 0.1);
+            color: var(--primary-light);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .article-content {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            color: var(--text-primary);
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .article-content h3 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin: 2.5rem 0 1rem;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-content strong {
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        .article-content code {
+            background-color: rgba(14, 165, 233, 0.1);
+            color: var(--primary-light);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: var(--font-code);
+            font-size: 0.9em;
+        }
+
+        .article-content pre {
+            background-color: #282c34;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content pre code {
+            background: none;
+            padding: 0;
+            color: #abb2bf;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background-color: var(--bg-light);
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+        }
+
+        .info-box-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: gap var(--transition-base);
+        }
+
+        .back-button:hover {
+            gap: 1rem;
+        }
+
+        .author-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .author-box h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .author-box p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .social-links a:hover {
+            color: var(--primary-dark);
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .pros-box, .cons-box {
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .pros-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%);
+            border-left: 4px solid #10b981;
+        }
+
+        .cons-box {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.02) 100%);
+            border-left: 4px solid #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html">LP<span class="dot">.</span></a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#home" class="nav-link" data-i18n="nav.home">Home</a></li>
+                <li><a href="index.html#about" class="nav-link" data-i18n="nav.about">Chi Sono</a></li>
+                <li><a href="index.html#skills" class="nav-link" data-i18n="nav.skills">Competenze</a></li>
+                <li><a href="index.html#experience" class="nav-link" data-i18n="nav.experience">Esperienza</a></li>
+                <li><a href="index.html#projects" class="nav-link" data-i18n="nav.projects">Progetti</a></li>
+                <li><a href="index.html#blog" class="nav-link" data-i18n="nav.blog">Articoli</a></li>
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">Contatti</a></li>
+                <li class="language-selector">
+                    <button id="langToggle" class="lang-toggle" aria-label="Change language">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLang">IT</span>
+                    </button>
+                    <ul class="lang-menu" id="langMenu">
+                        <li><button data-lang="it">🇮🇹 Italiano</button></li>
+                        <li><button data-lang="en">🇬🇧 English</button></li>
+                        <li><button data-lang="es">🇪🇸 Español</button></li>
+                        <li><button data-lang="de">🇩🇪 Deutsch</button></li>
+                        <li><button data-lang="fr">🇫🇷 Français</button></li>
+                        <li><button data-lang="no">🇳🇴 Norsk</button></li>
+                        <li><button data-lang="ro">🇷🇴 Română</button></li>
+                    </ul>
+                </li>
+                <li>
+                    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <article class="article-container">
+        <a href="index.html#blog" class="back-button">
+            <i class="fas fa-arrow-left"></i> <span data-i18n="articleRestGraphQL.backBtn">Torna al Blog</span>
+        </a>
+
+        <header class="article-header">
+            <div class="article-meta">
+                <span><i class="far fa-calendar"></i> <span data-i18n="articleRestGraphQL.date">7 Gennaio 2026</span></span>
+                <span><i class="far fa-clock"></i> <span data-i18n="articleRestGraphQL.readTime">6 min lettura</span></span>
+                <span><i class="far fa-user"></i> <span data-i18n="articleRestGraphQL.author">Leonardo Pedron</span></span>
+            </div>
+
+            <h1 class="article-title" data-i18n="articleRestGraphQL.title">REST API vs GraphQL: Quale Scegliere nel 2026?</h1>
+
+            <p class="article-excerpt" data-i18n="articleRestGraphQL.excerpt">
+                Confronto approfondito tra REST API e GraphQL. Scopri quando utilizzare ciascuna tecnologia, pattern di implementazione e come Hasura può accelerare lo sviluppo.
+            </p>
+
+            <div class="article-tags">
+                <span class="article-tag">REST API</span>
+                <span class="article-tag">GraphQL</span>
+                <span class="article-tag">Hasura</span>
+                <span class="article-tag">Backend Development</span>
+                <span class="article-tag">API Design</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <h2>Introduzione</h2>
+            <p>
+                Nel panorama dello sviluppo backend moderno, la scelta tra <strong>REST API</strong> e <strong>GraphQL</strong> è una delle decisioni architetturali più importanti. Entrambe hanno i loro punti di forza, ma servono casi d'uso diversi.
+            </p>
+            <p>
+                In questo articolo, basandomi sulla mia esperienza con entrambe le tecnologie in produzione, ti guiderò attraverso un confronto pratico per aiutarti a scegliere la soluzione migliore per il tuo progetto.
+            </p>
+
+            <h2>REST API: Il Veterano Affidabile</h2>
+            <p>
+                <strong>REST (Representational State Transfer)</strong> è un'architettura per API web che utilizza i metodi HTTP standard. È lo standard de facto da oltre 20 anni.
+            </p>
+
+            <h3>Caratteristiche Principali di REST</h3>
+            <ul>
+                <li><strong>Risorse come Endpoint</strong>: Ogni risorsa ha il suo URL unico</li>
+                <li><strong>Metodi HTTP Standard</strong>: GET, POST, PUT, DELETE, PATCH</li>
+                <li><strong>Stateless</strong>: Ogni richiesta contiene tutte le informazioni necessarie</li>
+                <li><strong>Caching Nativo</strong>: Supporto HTTP caching integrato</li>
+                <li><strong>Standardizzato</strong>: Pattern e convenzioni ben consolidati</li>
+            </ul>
+
+            <div class="pros-cons">
+                <div class="pros-box">
+                    <h4 style="color: #10b981; margin-bottom: 1rem;"><i class="fas fa-check-circle"></i> Vantaggi REST</h4>
+                    <ul style="margin: 0;">
+                        <li>Semplicità e familiarità</li>
+                        <li>Caching HTTP nativo</li>
+                        <li>Ottime performance per operazioni CRUD semplici</li>
+                        <li>Tool e debugging consolidati</li>
+                        <li>Supporto universale</li>
+                    </ul>
+                </div>
+                <div class="cons-box">
+                    <h4 style="color: #ef4444; margin-bottom: 1rem;"><i class="fas fa-times-circle"></i> Svantaggi REST</h4>
+                    <ul style="margin: 0;">
+                        <li>Over-fetching (dati non necessari)</li>
+                        <li>Under-fetching (multiple richieste)</li>
+                        <li>Versionamento API complesso</li>
+                        <li>Difficoltà con relazioni nested</li>
+                        <li>Endpoint proliferano rapidamente</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Esempio REST API: E-Commerce</h3>
+            <pre><code class="language-javascript">// REST API Endpoints
+GET    /api/users/:id              // Get user
+GET    /api/users/:id/orders       // Get user orders
+GET    /api/orders/:id             // Get single order
+GET    /api/orders/:id/items       // Get order items
+GET    /api/products/:id           // Get product details
+
+// Esempio: Server Node.js con Express
+const express = require('express');
+const app = express();
+
+// Get user with orders
+app.get('/api/users/:id', async (req, res) => {
+  const user = await User.findById(req.params.id);
+  res.json(user);
+});
+
+// Get user orders
+app.get('/api/users/:id/orders', async (req, res) => {
+  const orders = await Order.find({ userId: req.params.id });
+  res.json(orders);
+});
+
+// PROBLEMA: Per ottenere user + orders + order items
+// servono 3+ chiamate API separate!
+// 1. GET /api/users/123
+// 2. GET /api/users/123/orders
+// 3. GET /api/orders/456/items (per ogni ordine)</code></pre>
+
+            <h2>GraphQL: Il Nuovo Standard Flessibile</h2>
+            <p>
+                <strong>GraphQL</strong> è un query language per API sviluppato da Facebook nel 2015. Permette ai client di richiedere esattamente i dati di cui hanno bisogno.
+            </p>
+
+            <h3>Caratteristiche Principali di GraphQL</h3>
+            <ul>
+                <li><strong>Single Endpoint</strong>: Un solo endpoint per tutte le operazioni</li>
+                <li><strong>Query Dichiarative</strong>: Il client specifica esattamente cosa vuole</li>
+                <li><strong>Strongly Typed</strong>: Schema type system completo</li>
+                <li><strong>Real-time</strong>: Subscriptions per dati live</li>
+                <li><strong>Introspection</strong>: API auto-documentata</li>
+            </ul>
+
+            <div class="pros-cons">
+                <div class="pros-box">
+                    <h4 style="color: #10b981; margin-bottom: 1rem;"><i class="fas fa-check-circle"></i> Vantaggi GraphQL</h4>
+                    <ul style="margin: 0;">
+                        <li>Fetch preciso dei dati necessari</li>
+                        <li>Singola richiesta per dati complessi</li>
+                        <li>No versionamento API</li>
+                        <li>Schema fortemente tipizzato</li>
+                        <li>Ottimo per frontend development</li>
+                        <li>Real-time subscriptions</li>
+                    </ul>
+                </div>
+                <div class="cons-box">
+                    <h4 style="color: #ef4444; margin-bottom: 1rem;"><i class="fas fa-times-circle"></i> Svantaggi GraphQL</h4>
+                    <ul style="margin: 0;">
+                        <li>Curva di apprendimento più ripida</li>
+                        <li>Caching più complesso</li>
+                        <li>Performance imprevedibili con query complesse</li>
+                        <li>Overhead per operazioni semplici</li>
+                        <li>File upload più complicato</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Esempio GraphQL: Stessa Applicazione E-Commerce</h3>
+            <pre><code class="language-graphql"># Schema GraphQL
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  orders: [Order!]!
+}
+
+type Order {
+  id: ID!
+  total: Float!
+  status: String!
+  items: [OrderItem!]!
+  createdAt: DateTime!
+}
+
+type OrderItem {
+  id: ID!
+  quantity: Int!
+  price: Float!
+  product: Product!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  price: Float!
+  description: String
+}
+
+# Query per ottenere tutto in UNA richiesta!
+query GetUserWithOrders($userId: ID!) {
+  user(id: $userId) {
+    id
+    name
+    email
+    orders {
+      id
+      total
+      status
+      items {
+        quantity
+        price
+        product {
+          name
+          description
+        }
+      }
+    }
+  }
+}</code></pre>
+
+            <h2>Confronto Diretto: REST vs GraphQL</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Caratteristica</th>
+                        <th>REST</th>
+                        <th>GraphQL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Endpoint</strong></td>
+                        <td>Multipli per risorsa</td>
+                        <td>Singolo endpoint</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Fetching</strong></td>
+                        <td>Fixed data structure</td>
+                        <td>Client specifica esattamente</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Over/Under-fetching</strong></td>
+                        <td>Comune</td>
+                        <td>Eliminato</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Versionamento</strong></td>
+                        <td>/v1/, /v2/ necessario</td>
+                        <td>Deprecation, no versioni</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Caching</strong></td>
+                        <td>HTTP caching nativo</td>
+                        <td>Richiede strategie custom</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Real-time</strong></td>
+                        <td>WebSockets/SSE separati</td>
+                        <td>Subscriptions native</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Learning Curve</strong></td>
+                        <td>Bassa</td>
+                        <td>Media-Alta</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance</strong></td>
+                        <td>Ottima per CRUD semplici</td>
+                        <td>Ottima per query complesse</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Hasura: GraphQL Instantaneo su PostgreSQL</h2>
+            <p>
+                <strong>Hasura</strong> è un engine GraphQL che genera automaticamente API GraphQL dal tuo database PostgreSQL. Nella mia esperienza, ha accelerato lo sviluppo del 70%.
+            </p>
+
+            <h3>Vantaggi di Hasura</h3>
+            <ul>
+                <li><strong>Zero Code</strong>: GraphQL API generata automaticamente</li>
+                <li><strong>Real-time</strong>: Subscriptions out-of-the-box</li>
+                <li><strong>Role-based Access</strong>: Sistema di permessi granulare</li>
+                <li><strong>Remote Schemas</strong>: Integra API esterne</li>
+                <li><strong>Event Triggers</strong>: Business logic su eventi DB</li>
+                <li><strong>Performance</strong>: Query ottimizzate automaticamente</li>
+            </ul>
+
+            <h3>Setup Hasura in 5 Minuti</h3>
+            <pre><code class="language-yaml"># docker-compose.yml
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  hasura:
+    image: hasura/graphql-engine:latest
+    ports:
+      - "8080:8080"
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:password@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: myadminsecret
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:</code></pre>
+
+            <pre><code class="language-bash"># Avvia Hasura
+docker-compose up -d
+
+# Vai su http://localhost:8080
+# Console GraphQL pronta all'uso!
+# Crea tabelle via UI o migrations
+# API GraphQL generata automaticamente</code></pre>
+
+            <h2>Quando Usare REST</h2>
+            <div class="info-box">
+                <div class="info-box-title">
+                    <i class="fas fa-check-circle"></i>
+                    Scegli REST se
+                </div>
+                <ul>
+                    <li>Hai operazioni CRUD semplici e dirette</li>
+                    <li>Il caching è prioritario (CDN, browser cache)</li>
+                    <li>Il team ha poca esperienza con GraphQL</li>
+                    <li>Hai bisogno di HTTP verbs semantici (GET, POST, PUT, DELETE)</li>
+                    <li>Stai costruendo API pubbliche per terze parti</li>
+                    <li>Il progetto è semplice e lo schema è stabile</li>
+                    <li>Hai bisogno di file upload/download pesanti</li>
+                </ul>
+            </div>
+
+            <h2>Quando Usare GraphQL</h2>
+            <div class="info-box">
+                <div class="info-box-title">
+                    <i class="fas fa-check-circle"></i>
+                    Scegli GraphQL se
+                </div>
+                <ul>
+                    <li>Hai relazioni complesse tra entità</li>
+                    <li>Il frontend necessita flessibilità nei dati</li>
+                    <li>Vuoi ridurre numero di richieste HTTP</li>
+                    <li>Hai bisogno di real-time data (subscriptions)</li>
+                    <li>Stai costruendo app mobile (bandwidth limitato)</li>
+                    <li>Vuoi API auto-documentata e type-safe</li>
+                    <li>Il team frontend e backend lavorano in parallelo</li>
+                </ul>
+            </div>
+
+            <h2>L'Approccio Ibrido</h2>
+            <p>
+                Non devi scegliere solo uno! Molte applicazioni moderne usano entrambi:
+            </p>
+            <ul>
+                <li><strong>GraphQL</strong> per operazioni di lettura complesse e UI interattive</li>
+                <li><strong>REST</strong> per upload file, webhook, public API</li>
+                <li><strong>gRPC</strong> per comunicazione interna microservizi</li>
+            </ul>
+
+            <h3>Esempio Architettura Ibrida</h3>
+            <pre><code class="language-javascript">// API Gateway con Express
+const express = require('express');
+const { ApolloServer } = require('apollo-server-express');
+
+const app = express();
+
+// GraphQL per query complesse
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
+server.applyMiddleware({ app, path: '/graphql' });
+
+// REST per file upload
+app.post('/api/upload', upload.single('file'), (req, res) => {
+  // Handle file upload
+  res.json({ url: req.file.path });
+});
+
+// REST per webhook esterni
+app.post('/api/webhooks/stripe', (req, res) => {
+  // Handle Stripe webhook
+  res.sendStatus(200);
+});
+
+app.listen(4000);</code></pre>
+
+            <h2>La Mia Esperienza in Produzione</h2>
+
+            <h3>Progetto 1: Dashboard Analytics con Hasura + GraphQL</h3>
+            <p>
+                Per una fintech, ho implementato una dashboard real-time con <strong>Hasura</strong>:
+            </p>
+            <ul>
+                <li>Query complesse con JOIN multipli risolte in una richiesta</li>
+                <li>Real-time subscriptions per aggiornamenti live</li>
+                <li>Sviluppo 70% più veloce rispetto a REST tradizionale</li>
+                <li>Frontend poteva iterare senza modifiche backend</li>
+            </ul>
+
+            <h3>Progetto 2: API Pubblica con REST</h3>
+            <p>
+                Per un e-commerce, ho progettato <strong>REST API pubbliche</strong>:
+            </p>
+            <ul>
+                <li>Semplicità per integrazioni terze parti</li>
+                <li>Caching CDN out-of-the-box</li>
+                <li>Documentazione Swagger familiare</li>
+                <li>Rate limiting per endpoint specifici</li>
+            </ul>
+
+            <h2>Conclusioni e Raccomandazioni</h2>
+            <p>
+                La scelta tra REST e GraphQL dipende dal tuo caso d'uso specifico:
+            </p>
+
+            <div class="info-box">
+                <div class="info-box-title">
+                    <i class="fas fa-lightbulb"></i>
+                    Il Mio Consiglio
+                </div>
+                <p style="margin-bottom: 1rem;">
+                    <strong>Inizia con GraphQL + Hasura</strong> se:
+                </p>
+                <ul style="margin-bottom: 1rem;">
+                    <li>Stai costruendo una nuova applicazione</li>
+                    <li>Hai relazioni complesse tra entità</li>
+                    <li>Vuoi velocizzare lo sviluppo</li>
+                </ul>
+                <p style="margin-bottom: 1rem;">
+                    <strong>Usa REST</strong> per:
+                </p>
+                <ul>
+                    <li>API pubbliche e webhook</li>
+                    <li>File upload/download</li>
+                    <li>Quando semplicità > flessibilità</li>
+                </ul>
+            </div>
+
+            <h2>Risorse Utili</h2>
+            <ul>
+                <li>GraphQL Official: <code>https://graphql.org/</code></li>
+                <li>Hasura Documentation: <code>https://hasura.io/docs/</code></li>
+                <li>Apollo GraphQL: <code>https://www.apollographql.com/</code></li>
+                <li>REST API Best Practices (Microsoft)</li>
+            </ul>
+
+            <h2>Hai bisogno di aiuto?</h2>
+            <p>
+                Se stai valutando quale tecnologia usare per il tuo progetto, o se vuoi migrare da REST a GraphQL (o viceversa), <a href="index.html#contact" style="color: var(--primary-color);">contattami per una consulenza</a>. Ho implementato entrambe le soluzioni in produzione e posso guidarti nella scelta giusta.
+            </p>
+        </div>
+
+        <div class="author-box">
+            <h3 data-i18n="articleRestGraphQL.authorBoxTitle">Sull'Autore</h3>
+            <p data-i18n-html="articleRestGraphQL.authorBoxDesc">
+                <strong>Leonardo Pedron</strong> è un Software Engineer con oltre 4 anni di esperienza specializzato in Backend Development. Ha implementato REST API e GraphQL in produzione, con particolare expertise in Hasura e Node.js.
+            </p>
+            <div class="social-links">
+                <a href="https://github.com/LeonardoPedron" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/leonardo-pedron/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text" data-i18n-html="footer.text">
+                    Progettato e sviluppato da <strong>Leonardo Pedron</strong>
+                </p>
+                <p class="footer-copyright">
+                    &copy; <span id="currentYear"></span> Leonardo Pedron. <span data-i18n="footer.copyright">Tutti i diritti riservati.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+    <script>
+        hljs.highlightAll();
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

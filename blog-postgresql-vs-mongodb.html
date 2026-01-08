@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guida completa per scegliere tra PostgreSQL e MongoDB. Analisi approfondita di vantaggi, svantaggi, performance e casi d'uso reali per database relazionali e NoSQL.">
+    <meta name="keywords" content="PostgreSQL, MongoDB, database relazionale, NoSQL, database design, scalabilità, performance database, SQL vs NoSQL, architettura database">
+    <meta name="author" content="Leonardo Pedron">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="PostgreSQL vs MongoDB: Quando Scegliere un Database Relazionale o NoSQL">
+    <meta property="og:description" content="Guida completa per scegliere il database giusto per il tuo progetto con esempi pratici e architetture scalabili.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leonardopedron.github.io/blog-postgresql-vs-mongodb.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PostgreSQL vs MongoDB: Guida Completa">
+    <meta name="twitter:description" content="Scopri quando usare PostgreSQL o MongoDB con esempi pratici e best practices.">
+    <title>PostgreSQL vs MongoDB: Quando Scegliere Relazionale o NoSQL | Leonardo Pedron</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        // Set theme immediately to avoid flash
+        const theme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+    </script>
+    <script src="js/i18n.js" defer></script>
+    <script src="js/interactive.js" defer></script>
+    <script src="js/blog-article.js" defer></script>
+
+    <style>
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-top: 100px;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .article-excerpt {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-tag {
+            background-color: rgba(14, 165, 233, 0.1);
+            color: var(--primary-light);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .article-content {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            color: var(--text-primary);
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .article-content h3 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin: 2.5rem 0 1rem;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-content strong {
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        .article-content code {
+            background-color: rgba(14, 165, 233, 0.1);
+            color: var(--primary-light);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: var(--font-code);
+            font-size: 0.9em;
+        }
+
+        .article-content pre {
+            background-color: #282c34;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content pre code {
+            background: none;
+            padding: 0;
+            color: #abb2bf;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background-color: var(--bg-light);
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+        }
+
+        .info-box-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: gap var(--transition-base);
+        }
+
+        .back-button:hover {
+            gap: 1rem;
+        }
+
+        .author-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .author-box h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .author-box p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .social-links a:hover {
+            color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html">LP<span class="dot">.</span></a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#home" class="nav-link" data-i18n="nav.home">Home</a></li>
+                <li><a href="index.html#about" class="nav-link" data-i18n="nav.about">Chi Sono</a></li>
+                <li><a href="index.html#skills" class="nav-link" data-i18n="nav.skills">Competenze</a></li>
+                <li><a href="index.html#experience" class="nav-link" data-i18n="nav.experience">Esperienza</a></li>
+                <li><a href="index.html#projects" class="nav-link" data-i18n="nav.projects">Progetti</a></li>
+                <li><a href="index.html#blog" class="nav-link" data-i18n="nav.blog">Articoli</a></li>
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">Contatti</a></li>
+                <li class="language-selector">
+                    <button id="langToggle" class="lang-toggle" aria-label="Change language">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLang">IT</span>
+                    </button>
+                    <ul class="lang-menu" id="langMenu">
+                        <li><button data-lang="it">🇮🇹 Italiano</button></li>
+                        <li><button data-lang="en">🇬🇧 English</button></li>
+                        <li><button data-lang="es">🇪🇸 Español</button></li>
+                        <li><button data-lang="de">🇩🇪 Deutsch</button></li>
+                        <li><button data-lang="fr">🇫🇷 Français</button></li>
+                        <li><button data-lang="no">🇳🇴 Norsk</button></li>
+                        <li><button data-lang="ro">🇷🇴 Română</button></li>
+                    </ul>
+                </li>
+                <li>
+                    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <article class="article-container">
+        <a href="index.html#blog" class="back-button">
+            <i class="fas fa-arrow-left"></i> <span data-i18n="articlePostgres.backBtn">Torna al Blog</span>
+        </a>
+
+        <header class="article-header">
+            <div class="article-meta">
+                <span><i class="far fa-calendar"></i> <span data-i18n="articlePostgres.date">7 Gennaio 2026</span></span>
+                <span><i class="far fa-clock"></i> <span data-i18n="articlePostgres.readTime">8 min lettura</span></span>
+                <span><i class="far fa-user"></i> <span data-i18n="articlePostgres.author">Leonardo Pedron</span></span>
+            </div>
+
+            <h1 class="article-title" data-i18n="articlePostgres.title">PostgreSQL vs MongoDB: Quando Scegliere un Database Relazionale o NoSQL</h1>
+
+            <p class="article-excerpt" data-i18n="articlePostgres.excerpt">
+                Una guida completa per scegliere il database giusto per il tuo progetto. Analizziamo vantaggi, svantaggi e casi d'uso reali di PostgreSQL e MongoDB, con esempi pratici di architetture scalabili.
+            </p>
+
+            <div class="article-tags">
+                <span class="article-tag">PostgreSQL</span>
+                <span class="article-tag">MongoDB</span>
+                <span class="article-tag">Database Design</span>
+                <span class="article-tag">Scalability</span>
+                <span class="article-tag">Backend Development</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <h2>Introduzione</h2>
+            <p>
+                La scelta del database è una delle decisioni più critiche nello sviluppo di un'applicazione moderna. <strong>PostgreSQL</strong> e <strong>MongoDB</strong> rappresentano due filosofie diverse: il primo è un database relazionale SQL tradizionale ma potentissimo, il secondo è un database NoSQL orientato ai documenti.
+            </p>
+            <p>
+                In questo articolo, basandomi sulla mia esperienza di oltre 4 anni con entrambe le tecnologie, ti guiderò attraverso le caratteristiche, i pro e i contro, e i casi d'uso ideali per ciascuno.
+            </p>
+
+            <h2>PostgreSQL: Il Gigante Relazionale</h2>
+            <p>
+                <strong>PostgreSQL</strong> è un database relazionale open-source con oltre 35 anni di sviluppo attivo. È conosciuto per la sua robustezza, affidabilità e aderenza agli standard SQL.
+            </p>
+
+            <h3>Vantaggi di PostgreSQL</h3>
+            <ul>
+                <li><strong>ACID Compliance</strong>: Garantisce transazioni atomiche, consistenti, isolate e durature</li>
+                <li><strong>Relazioni Complesse</strong>: Eccellente per gestire JOIN complessi e relazioni many-to-many</li>
+                <li><strong>Integrità dei Dati</strong>: Constraints, foreign keys e triggers per mantenere la coerenza</li>
+                <li><strong>Query Avanzate</strong>: Supporto per window functions, CTE (Common Table Expressions) e query ricorsive</li>
+                <li><strong>Estensibilità</strong>: Supporto per JSON, full-text search, e estensioni come PostGIS per dati geospaziali</li>
+                <li><strong>Performance Predittibili</strong>: Query optimizer maturo e performance consistenti</li>
+            </ul>
+
+            <h3>Quando Usare PostgreSQL</h3>
+            <div class="info-box">
+                <div class="info-box-title">
+                    <i class="fas fa-lightbulb"></i>
+                    Casi d'Uso Ideali
+                </div>
+                <ul>
+                    <li>Applicazioni finanziarie dove l'integrità dei dati è critica</li>
+                    <li>Sistemi ERP/CRM con relazioni complesse tra entità</li>
+                    <li>E-commerce con inventario, ordini, utenti e transazioni interconnessi</li>
+                    <li>Applicazioni che richiedono transazioni complesse e rollback</li>
+                    <li>Progetti dove lo schema è ben definito e stabile</li>
+                </ul>
+            </div>
+
+            <h3>Esempio Pratico: Schema E-Commerce</h3>
+            <pre><code class="language-sql">-- Schema PostgreSQL per E-Commerce
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    stock INT NOT NULL DEFAULT 0,
+    category_id INT REFERENCES categories(id)
+);
+
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    total DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE order_items (
+    id SERIAL PRIMARY KEY,
+    order_id INT REFERENCES orders(id) ON DELETE CASCADE,
+    product_id INT REFERENCES products(id),
+    quantity INT NOT NULL,
+    price DECIMAL(10, 2) NOT NULL
+);
+
+-- Query con JOIN per ottenere dettagli ordine completi
+SELECT
+    o.id as order_id,
+    u.name as customer_name,
+    u.email,
+    p.name as product_name,
+    oi.quantity,
+    oi.price,
+    o.total,
+    o.status
+FROM orders o
+JOIN users u ON o.user_id = u.id
+JOIN order_items oi ON o.id = oi.order_id
+JOIN products p ON oi.product_id = p.id
+WHERE o.id = 12345;</code></pre>
+
+            <h2>MongoDB: La Flessibilità del NoSQL</h2>
+            <p>
+                <strong>MongoDB</strong> è un database NoSQL orientato ai documenti che memorizza i dati in formato JSON-like (BSON). Offre schema flessibile e scalabilità orizzontale nativa.
+            </p>
+
+            <h3>Vantaggi di MongoDB</h3>
+            <ul>
+                <li><strong>Schema Flessibile</strong>: Documenti possono avere strutture diverse nella stessa collezione</li>
+                <li><strong>Scalabilità Orizzontale</strong>: Sharding nativo per distribuire dati su più server</li>
+                <li><strong>Performance su Letture</strong>: Ottimo per applicazioni read-heavy con denormalizzazione</li>
+                <li><strong>Sviluppo Rapido</strong>: Perfetto per prototipi e MVP dove lo schema evolve velocemente</li>
+                <li><strong>Documenti Annidati</strong>: Relazioni embedded evitano JOIN costosi</li>
+                <li><strong>Aggregation Framework</strong>: Pipeline potenti per analisi dati complesse</li>
+            </ul>
+
+            <h3>Quando Usare MongoDB</h3>
+            <div class="info-box">
+                <div class="info-box-title">
+                    <i class="fas fa-lightbulb"></i>
+                    Casi d'Uso Ideali
+                </div>
+                <ul>
+                    <li>Applicazioni real-time (chat, social media, IoT)</li>
+                    <li>Content management systems con strutture dati variabili</li>
+                    <li>Cataloghi prodotti con attributi molto diversi</li>
+                    <li>Logging e analytics con volumi enormi di dati</li>
+                    <li>Applicazioni che richiedono scalabilità orizzontale immediata</li>
+                    <li>Progetti in fase iniziale con schema in evoluzione</li>
+                </ul>
+            </div>
+
+            <h3>Esempio Pratico: Documento MongoDB</h3>
+            <pre><code class="language-javascript">// Documento MongoDB per un post di blog
+{
+  "_id": ObjectId("507f1f77bcf86cd799439011"),
+  "title": "Come Scalare MongoDB in Produzione",
+  "slug": "scalare-mongodb-produzione",
+  "author": {
+    "id": ObjectId("507f191e810c19729de860ea"),
+    "name": "Leonardo Pedron",
+    "avatar": "https://example.com/avatar.jpg"
+  },
+  "content": "Contenuto completo dell'articolo...",
+  "tags": ["MongoDB", "Scalability", "DevOps"],
+  "comments": [
+    {
+      "user": "Mario Rossi",
+      "text": "Ottimo articolo!",
+      "date": ISODate("2026-01-05T10:30:00Z"),
+      "likes": 5
+    },
+    {
+      "user": "Laura Bianchi",
+      "text": "Molto utile, grazie!",
+      "date": ISODate("2026-01-06T14:20:00Z"),
+      "likes": 3
+    }
+  ],
+  "stats": {
+    "views": 1523,
+    "shares": 45,
+    "reading_time": 8
+  },
+  "published": true,
+  "created_at": ISODate("2026-01-01T09:00:00Z"),
+  "updated_at": ISODate("2026-01-07T11:30:00Z")
+}
+
+// Query MongoDB per trovare articoli
+db.posts.find({
+  "tags": { $in: ["MongoDB", "Scalability"] },
+  "published": true,
+  "stats.views": { $gt: 1000 }
+}).sort({ "created_at": -1 }).limit(10);</code></pre>
+
+            <h2>Confronto Diretto</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Caratteristica</th>
+                        <th>PostgreSQL</th>
+                        <th>MongoDB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Tipo</strong></td>
+                        <td>Relazionale (SQL)</td>
+                        <td>Orientato ai Documenti (NoSQL)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Schema</strong></td>
+                        <td>Rigido, definito in anticipo</td>
+                        <td>Flessibile, schema-less</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transazioni</strong></td>
+                        <td>ACID completo, eccellente</td>
+                        <td>ACID con limitazioni (multi-documento)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Scalabilità</strong></td>
+                        <td>Verticale (scale-up)</td>
+                        <td>Orizzontale (scale-out, sharding)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JOIN</strong></td>
+                        <td>Nativi e performanti</td>
+                        <td>Lookup (meno efficienti)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance Scrittura</strong></td>
+                        <td>Buona, con overhead transazioni</td>
+                        <td>Ottima, veloce per inserimenti</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance Lettura</strong></td>
+                        <td>Ottima per query complesse</td>
+                        <td>Eccellente per query semplici</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Caso d'Uso</strong></td>
+                        <td>Dati strutturati, relazioni complesse</td>
+                        <td>Dati semi-strutturati, alta scalabilità</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>La Mia Esperienza Pratica</h2>
+            <p>
+                Nei miei 4+ anni di esperienza, ho lavorato con entrambi i database in produzione:
+            </p>
+
+            <h3>Progetto 1: Sistema ERP con PostgreSQL</h3>
+            <p>
+                Per un cliente nel settore manifatturiero, ho progettato un sistema ERP completo con <strong>PostgreSQL</strong>. La scelta è stata naturale data la necessità di:
+            </p>
+            <ul>
+                <li>Gestire relazioni complesse tra ordini, clienti, fornitori e magazzino</li>
+                <li>Garantire integrità referenziale con foreign keys</li>
+                <li>Eseguire transazioni atomiche per movimentazioni di magazzino</li>
+                <li>Generare report complessi con JOIN multipli</li>
+            </ul>
+            <p>
+                <strong>Risultato</strong>: Sistema stabile, zero inconsistenze di dati, query complesse eseguite in millisecondi grazie all'ottimizzatore PostgreSQL.
+            </p>
+
+            <h3>Progetto 2: Piattaforma Analytics con MongoDB</h3>
+            <p>
+                Per una startup fintech, ho implementato una piattaforma di analytics real-time con <strong>MongoDB</strong>:
+            </p>
+            <ul>
+                <li>Ingestione di milioni di eventi al giorno (logs, transazioni, metriche)</li>
+                <li>Schema che evolve continuamente con nuovi tipi di eventi</li>
+                <li>Query aggregate complesse per dashboard in tempo reale</li>
+                <li>Scalabilità orizzontale con sharding per gestire la crescita</li>
+            </ul>
+            <p>
+                <strong>Risultato</strong>: Performance eccellenti su lettura/scrittura massiva, scalabilità semplice aggiungendo nuovi shard, flessibilità per nuovi requisiti.
+            </p>
+
+            <h2>Quando NON Usare Ciascuno</h2>
+
+            <h3>Evita PostgreSQL se:</h3>
+            <ul>
+                <li>Hai bisogno di scalabilità orizzontale immediata e massiva</li>
+                <li>Lo schema cambia continuamente e velocemente</li>
+                <li>Hai principalmente operazioni di scrittura ad altissima velocità</li>
+                <li>I dati sono altamente denormalizzati e senza relazioni</li>
+            </ul>
+
+            <h3>Evita MongoDB se:</h3>
+            <ul>
+                <li>Hai transazioni complesse multi-entità critiche</li>
+                <li>I tuoi dati sono fortemente relazionali</li>
+                <li>Hai bisogno di JOIN complessi e frequenti</li>
+                <li>L'integrità referenziale è assolutamente critica</li>
+                <li>Hai query analitiche complesse su dati normalizzati</li>
+            </ul>
+
+            <h2>L'Approccio Ibrido: Polyglot Persistence</h2>
+            <p>
+                In sistemi moderni complessi, non devi scegliere uno solo! L'approccio <strong>polyglot persistence</strong> usa il database giusto per ogni caso d'uso:
+            </p>
+            <ul>
+                <li><strong>PostgreSQL</strong> per dati transazionali (utenti, ordini, pagamenti)</li>
+                <li><strong>MongoDB</strong> per cataloghi prodotti, contenuti, logs</li>
+                <li><strong>Redis</strong> per caching e session store</li>
+                <li><strong>Elasticsearch</strong> per ricerca full-text</li>
+            </ul>
+
+            <h2>Conclusioni e Raccomandazioni</h2>
+            <p>
+                Non esiste "il database migliore", ma il <strong>database giusto per il tuo caso d'uso</strong>:
+            </p>
+
+            <div class="info-box">
+                <div class="info-box-title">
+                    <i class="fas fa-check-circle"></i>
+                    Scegli PostgreSQL se
+                </div>
+                <p>
+                    Hai dati strutturati con relazioni complesse, necessiti di transazioni ACID robuste, vuoi integrità referenziale garantita, e lo schema è relativamente stabile.
+                </p>
+            </div>
+
+            <div class="info-box">
+                <div class="info-box-title">
+                    <i class="fas fa-check-circle"></i>
+                    Scegli MongoDB se
+                </div>
+                <p>
+                    Hai dati semi-strutturati o variabili, necessiti di scalabilità orizzontale, lo schema evolve rapidamente, prioritizzi velocità di sviluppo, e hai volumi enormi di dati con query semplici.
+                </p>
+            </div>
+
+            <h2>Risorse Utili</h2>
+            <ul>
+                <li>PostgreSQL Official Documentation: <code>https://www.postgresql.org/docs/</code></li>
+                <li>MongoDB Manual: <code>https://docs.mongodb.com/</code></li>
+                <li>Database Design Patterns (libro consigliato)</li>
+                <li>Designing Data-Intensive Applications di Martin Kleppmann</li>
+            </ul>
+
+            <h2>Hai bisogno di consulenza?</h2>
+            <p>
+                Se stai progettando un nuovo sistema e hai dubbi su quale database scegliere, o se vuoi ottimizzare un'architettura esistente, <a href="index.html#contact" style="color: var(--primary-color);">contattami per una consulenza</a>. Con la mia esperienza in entrambe le tecnologie posso aiutarti a fare la scelta giusta per il tuo progetto.
+            </p>
+        </div>
+
+        <div class="author-box">
+            <h3 data-i18n="articlePostgres.authorBoxTitle">Sull'Autore</h3>
+            <p data-i18n-html="articlePostgres.authorBoxDesc">
+                <strong>Leonardo Pedron</strong> è un Software Engineer con oltre 4 anni di esperienza specializzato in Backend Development e Database Architecture. Ha lavorato con PostgreSQL, MongoDB, MariaDB e altre tecnologie database in contesti enterprise e startup.
+            </p>
+            <div class="social-links">
+                <a href="https://github.com/LeonardoPedron" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/leonardo-pedron/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text" data-i18n-html="footer.text">
+                    Progettato e sviluppato da <strong>Leonardo Pedron</strong>
+                </p>
+                <p class="footer-copyright">
+                    &copy; <span id="currentYear"></span> Leonardo Pedron. <span data-i18n="footer.copyright">Tutti i diritti riservati.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script>
+        hljs.highlightAll();
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

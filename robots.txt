@@ -1,0 +1,7 @@
+# robots.txt for Leonardo Pedron Portfolio
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://leonardopedron.github.io/sitemap.xml

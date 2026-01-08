@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guida completa alle best practices Docker per backend developers. Ottimizza immagini, multi-stage builds, security, performance e gestione ambiente di sviluppo con Docker Compose.">
+    <meta name="keywords" content="Docker, containerization, DevOps, Docker best practices, multi-stage builds, Docker Compose, backend development, microservices, container security">
+    <meta name="author" content="Leonardo Pedron">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Docker per Backend Developers: Best Practices e Ottimizzazioni">
+    <meta property="og:description" content="Guida completa per containerizzare applicazioni backend in modo efficiente con Docker.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://leonardopedron.github.io/blog-docker-best-practices.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Docker Best Practices per Backend Developers">
+    <meta name="twitter:description" content="Ottimizza le tue immagini Docker con best practices e tecniche avanzate.">
+    <title>Docker per Backend Developers: Best Practices e Ottimizzazioni | Leonardo Pedron</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        // Set theme immediately to avoid flash
+        const theme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+    </script>
+    <script src="js/i18n.js" defer></script>
+    <script src="js/interactive.js" defer></script>
+    <script src="js/blog-article.js" defer></script>
+
+    <style>
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-top: 100px;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .article-excerpt {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-tag {
+            background-color: rgba(14, 165, 233, 0.1);
+            color: var(--primary-light);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .article-content {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        .article-content h2 {
+            color: var(--text-primary);
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .article-content h3 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin: 2.5rem 0 1rem;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .article-content strong {
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        .article-content code {
+            background-color: rgba(14, 165, 233, 0.1);
+            color: var(--primary-light);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: var(--font-code);
+            font-size: 0.9em;
+        }
+
+        .article-content pre {
+            background-color: #282c34;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content pre code {
+            background: none;
+            padding: 0;
+            color: #abb2bf;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+        }
+
+        .info-box-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: gap var(--transition-base);
+        }
+
+        .back-button:hover {
+            gap: 1rem;
+        }
+
+        .author-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .author-box h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .author-box p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .social-links a:hover {
+            color: var(--primary-dark);
+        }
+
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .before-box, .after-box {
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .before-box {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.02) 100%);
+        }
+
+        .after-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%);
+        }
+
+        @media (max-width: 768px) {
+            .before-after {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html">LP<span class="dot">.</span></a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html#home" class="nav-link" data-i18n="nav.home">Home</a></li>
+                <li><a href="index.html#about" class="nav-link" data-i18n="nav.about">Chi Sono</a></li>
+                <li><a href="index.html#skills" class="nav-link" data-i18n="nav.skills">Competenze</a></li>
+                <li><a href="index.html#experience" class="nav-link" data-i18n="nav.experience">Esperienza</a></li>
+                <li><a href="index.html#projects" class="nav-link" data-i18n="nav.projects">Progetti</a></li>
+                <li><a href="index.html#blog" class="nav-link" data-i18n="nav.blog">Articoli</a></li>
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">Contatti</a></li>
+                <li class="language-selector">
+                    <button id="langToggle" class="lang-toggle" aria-label="Change language">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLang">IT</span>
+                    </button>
+                    <ul class="lang-menu" id="langMenu">
+                        <li><button data-lang="it">🇮🇹 Italiano</button></li>
+                        <li><button data-lang="en">🇬🇧 English</button></li>
+                        <li><button data-lang="es">🇪🇸 Español</button></li>
+                        <li><button data-lang="de">🇩🇪 Deutsch</button></li>
+                        <li><button data-lang="fr">🇫🇷 Français</button></li>
+                        <li><button data-lang="no">🇳🇴 Norsk</button></li>
+                        <li><button data-lang="ro">🇷🇴 Română</button></li>
+                    </ul>
+                </li>
+                <li>
+                    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <article class="article-container">
+        <a href="index.html#blog" class="back-button">
+            <i class="fas fa-arrow-left"></i> <span data-i18n="articleDocker.backBtn">Torna al Blog</span>
+        </a>
+
+        <header class="article-header">
+            <div class="article-meta">
+                <span><i class="far fa-calendar"></i> <span data-i18n="articleDocker.date">7 Gennaio 2026</span></span>
+                <span><i class="far fa-clock"></i> <span data-i18n="articleDocker.readTime">10 min lettura</span></span>
+                <span><i class="far fa-user"></i> <span data-i18n="articleDocker.author">Leonardo Pedron</span></span>
+            </div>
+
+            <h1 class="article-title" data-i18n="articleDocker.title">Docker per Backend Developers: Best Practices e Ottimizzazioni</h1>
+
+            <p class="article-excerpt" data-i18n="articleDocker.excerpt">
+                Come containerizzare applicazioni backend in modo efficiente, ottimizzare le immagini Docker e implementare ambienti di sviluppo consistenti con best practices testate in produzione.
+            </p>
+
+            <div class="article-tags">
+                <span class="article-tag">Docker</span>
+                <span class="article-tag">DevOps</span>
+                <span class="article-tag">Best Practices</span>
+                <span class="article-tag">Containerization</span>
+                <span class="article-tag">Performance</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <h2>Introduzione</h2>
+            <p>
+                <strong>Docker</strong> ha rivoluzionato lo sviluppo backend moderno. Nella mia esperienza con oltre 4 anni di lavoro con container in produzione, ho imparato che scrivere un Dockerfile funzionante è facile, ma scriverne uno <strong>ottimizzato</strong> richiede conoscenze specifiche.
+            </p>
+            <p>
+                In questo articolo condivido le best practices che ho applicato in produzione per ridurre dimensioni immagini del 70%, velocizzare build del 5x, e creare ambienti di sviluppo reproducibili.
+            </p>
+
+            <h2>Perché Docker per Backend?</h2>
+            <p>
+                Docker risolve il classico problema "funziona sul mio computer":
+            </p>
+            <ul>
+                <li><strong>Consistency</strong>: Stesso ambiente dev, staging, production</li>
+                <li><strong>Isolation</strong>: Dipendenze isolate per progetto</li>
+                <li><strong>Portability</strong>: Deploy su qualsiasi infrastruttura</li>
+                <li><strong>Scalability</strong>: Orchestrazione con Kubernetes</li>
+                <li><strong>CI/CD</strong>: Integrazione perfetta nelle pipeline</li>
+            </ul>
+
+            <h2>Best Practice #1: Multi-Stage Builds</h2>
+            <p>
+                La tecnica più impattante per ridurre dimensioni immagini Docker è il <strong>multi-stage build</strong>.
+            </p>
+
+            <h3>Esempio: Node.js Application</h3>
+            <div class="before-after">
+                <div class="before-box">
+                    <h4 style="color: #ef4444; margin-bottom: 1rem;"><i class="fas fa-times-circle"></i> ❌ Prima (1.2GB)</h4>
+                    <pre style="font-size: 0.85rem; margin: 0;"><code class="language-dockerfile"># Dockerfile non ottimizzato
+FROM node:18
+
+WORKDIR /app
+
+# Copia tutto
+COPY . .
+
+# Installa dipendenze
+RUN npm install
+
+# Build
+RUN npm run build
+
+EXPOSE 3000
+CMD ["npm", "start"]
+
+# Dimensione: ~1.2GB!
+# Include node_modules development
+# Include devDependencies
+# Include source files non compilati</code></pre>
+                </div>
+                <div class="after-box">
+                    <h4 style="color: #10b981; margin-bottom: 1rem;"><i class="fas fa-check-circle"></i> ✅ Dopo (350MB)</h4>
+                    <pre style="font-size: 0.85rem; margin: 0;"><code class="language-dockerfile"># Dockerfile ottimizzato multi-stage
+# Stage 1: Build
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --only=production
+
+COPY . .
+RUN npm run build
+
+# Stage 2: Production
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY package*.json ./
+
+EXPOSE 3000
+CMD ["node", "dist/server.js"]
+
+# Dimensione: ~350MB! (70% riduzione)</code></pre>
+                </div>
+            </div>
+
+            <h3>Esempio: PHP/Laravel Application</h3>
+            <pre><code class="language-dockerfile"># Multi-stage build per Laravel
+# Stage 1: Composer dependencies
+FROM composer:2 AS composer
+
+WORKDIR /app
+
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
+
+COPY . .
+RUN composer dump-autoload --optimize --no-dev
+
+# Stage 2: Production
+FROM php:8.2-fpm-alpine
+
+# Install extensions
+RUN docker-php-ext-install pdo pdo_mysql opcache
+
+# Copy application
+WORKDIR /var/www/html
+COPY --from=composer /app .
+
+# Optimize Laravel
+RUN php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache
+
+EXPOSE 9000
+CMD ["php-fpm"]</code></pre>
+
+            <h2>Best Practice #2: Layer Caching Intelligente</h2>
+            <p>
+                Docker usa layer caching per velocizzare i build. Ordina i comandi dal <strong>meno frequente</strong> al <strong>più frequente</strong>.
+            </p>
+
+            <h3>Ordine Ottimale dei Layer</h3>
+            <pre><code class="language-dockerfile"># ✅ CORRETTO: Installa dipendenze PRIMA di copiare codice
+FROM node:18-alpine
+
+WORKDIR /app
+
+# 1. Copia solo file dipendenze (cambia raramente)
+COPY package*.json ./
+
+# 2. Installa dipendenze (layer cached se package.json non cambia)
+RUN npm ci
+
+# 3. Copia codice sorgente (cambia frequentemente)
+COPY . .
+
+# 4. Build (invalidato solo quando cambia codice)
+RUN npm run build
+
+# Se modifichi solo il codice, npm ci usa la cache!
+# Build 5-10x più veloci</code></pre>
+
+            <pre><code class="language-dockerfile"># ❌ SBAGLIATO: Copia tutto subito
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copia tutto (cache invalidata ad ogni modifica)
+COPY . .
+
+# npm install eseguito OGNI VOLTA anche se package.json non cambia!
+RUN npm install
+
+# Build lentissimi</code></pre>
+
+            <h2>Best Practice #3: .dockerignore</h2>
+            <p>
+                Come <code>.gitignore</code>, il file <code>.dockerignore</code> esclude file inutili dalla build context, riducendo dimensioni e velocizzando il build.
+            </p>
+
+            <pre><code class="language-bash"># .dockerignore essenziale
+node_modules
+npm-debug.log
+.git
+.gitignore
+.env
+.env.local
+README.md
+.vscode
+.idea
+*.md
+dist
+coverage
+.DS_Store
+Dockerfile
+docker-compose.yml
+
+# Non inviare a Docker daemon
+# Build context più leggero
+# Build più veloci</code></pre>
+
+            <h2>Best Practice #4: Usa Immagini Alpine</h2>
+            <p>
+                Le immagini <strong>Alpine Linux</strong> sono 5-10x più piccole delle immagini standard.
+            </p>
+
+            <div class="info-box">
+                <div class="info-box-title">
+                    <i class="fas fa-info-circle"></i>
+                    Confronto Dimensioni
+                </div>
+                <ul style="margin: 0;">
+                    <li><code>node:18</code> → 1.1GB</li>
+                    <li><code>node:18-alpine</code> → 180MB (84% riduzione!)</li>
+                    <li><code>python:3.11</code> → 920MB</li>
+                    <li><code>python:3.11-alpine</code> → 50MB (95% riduzione!)</li>
+                    <li><code>php:8.2-fpm</code> → 500MB</li>
+                    <li><code>php:8.2-fpm-alpine</code> → 85MB (83% riduzione!)</li>
+                </ul>
+            </div>
+
+            <h2>Best Practice #5: Security Hardening</h2>
+            <p>
+                Non eseguire mai container come <strong>root</strong> in produzione.
+            </p>
+
+            <pre><code class="language-dockerfile"># ✅ Security best practices
+FROM node:18-alpine
+
+# Crea user non-privilegiato
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+
+WORKDIR /app
+
+# Installa dipendenze come root
+COPY package*.json ./
+RUN npm ci --only=production
+
+# Copia applicazione
+COPY --chown=nodejs:nodejs . .
+
+# Cambia a user non-privilegiato
+USER nodejs
+
+EXPOSE 3000
+CMD ["node", "server.js"]
+
+# Container esegue come nodejs, non root!
+# Limita danni in caso di breach</code></pre>
+
+            <h2>Best Practice #6: Health Checks</h2>
+            <p>
+                Aggiungi health checks per container monitoring e orchestrazione.
+            </p>
+
+            <pre><code class="language-dockerfile"># Dockerfile con health check
+FROM node:18-alpine
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+
+EXPOSE 3000
+
+# Health check HTTP
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD node healthcheck.js
+
+CMD ["node", "server.js"]</code></pre>
+
+            <pre><code class="language-javascript">// healthcheck.js
+const http = require('http');
+
+const options = {
+  host: 'localhost',
+  port: 3000,
+  path: '/health',
+  timeout: 2000
+};
+
+const request = http.request(options, (res) => {
+  console.log(`STATUS: ${res.statusCode}`);
+  process.exit(res.statusCode === 200 ? 0 : 1);
+});
+
+request.on('error', (err) => {
+  console.error('ERROR:', err);
+  process.exit(1);
+});
+
+request.end();</code></pre>
+
+            <h2>Best Practice #7: Docker Compose per Dev Environment</h2>
+            <p>
+                Crea ambienti di sviluppo completi con <strong>docker-compose</strong>.
+            </p>
+
+            <h3>Esempio: Stack Backend Completo</h3>
+            <pre><code class="language-yaml"># docker-compose.yml - Environment completo
+version: '3.9'
+
+services:
+  # Backend API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://user:pass@db:5432/myapp
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db
+      - redis
+    command: npm run dev
+
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: myapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # Hasura GraphQL Engine
+  hasura:
+    image: hasura/graphql-engine:latest
+    ports:
+      - "8080:8080"
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://user:pass@db:5432/myapp
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: dev-secret
+    depends_on:
+      - db
+
+  # Mailhog (Email testing)
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web UI
+
+volumes:
+  postgres_data:
+  redis_data:
+
+# Comandi utili:
+# docker-compose up -d        → Avvia tutto
+# docker-compose logs -f api  → Segui logs API
+# docker-compose down         → Ferma tutto
+# docker-compose ps           → Status servizi</code></pre>
+
+            <h2>Best Practice #8: Environment Variables e Secrets</h2>
+            <div class="warning-box">
+                <div class="info-box-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    ⚠️ ATTENZIONE: Mai Secrets in Dockerfile!
+                </div>
+                <p>
+                    Non includere mai API keys, password o secrets nel Dockerfile o nella build.
+                </p>
+            </div>
+
+            <pre><code class="language-dockerfile"># ❌ MAI FARE QUESTO
+FROM node:18-alpine
+ENV DATABASE_PASSWORD=mysecretpassword123  # ESPOSTO IN IMMAGINE!
+ENV API_KEY=sk_live_abc123xyz             # CHIUNQUE PUÒ VEDERE!</code></pre>
+
+            <pre><code class="language-bash"># ✅ Passa secrets a runtime
+docker run -e DATABASE_PASSWORD=$DB_PASS \
+           -e API_KEY=$API_KEY \
+           my-app
+
+# ✅ O usa .env file (non committare!)
+docker run --env-file .env my-app
+
+# ✅ O usa Docker secrets (Swarm/Kubernetes)
+docker secret create db_password password.txt
+docker service create --secret db_password my-app</code></pre>
+
+            <h2>Best Practice #9: Ottimizzazione Build Cache</h2>
+            <p>
+                Usa <strong>BuildKit</strong> per build più veloci e cache avanzata.
+            </p>
+
+            <pre><code class="language-bash"># Abilita BuildKit (build 2-3x più veloci)
+export DOCKER_BUILDKIT=1
+
+# Build con cache mount (dependencies cache)
+docker build \
+  --build-arg BUILDKIT_INLINE_CACHE=1 \
+  --cache-from myapp:latest \
+  -t myapp:dev .
+
+# In Dockerfile usa cache mounts
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci --only=production</code></pre>
+
+            <h2>Best Practice #10: Monitoring e Logs</h2>
+            <p>
+                Configura logging strutturato per container observability.
+            </p>
+
+            <pre><code class="language-javascript">// logger.js - Structured logging
+const winston = require('winston');
+
+const logger = winston.createLogger({
+  level: process.env.LOG_LEVEL || 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()  // JSON per parsing facile
+  ),
+  transports: [
+    new winston.transports.Console({
+      format: winston.format.simple()
+    })
+  ]
+});
+
+// Log strutturati per container
+logger.info('Server started', {
+  port: 3000,
+  environment: process.env.NODE_ENV,
+  version: process.env.APP_VERSION
+});
+
+// Error tracking
+logger.error('Database connection failed', {
+  error: err.message,
+  stack: err.stack,
+  timestamp: new Date().toISOString()
+});</code></pre>
+
+            <h2>Checklist Docker per Production</h2>
+            <div class="info-box">
+                <div class="info-box-title">
+                    <i class="fas fa-tasks"></i>
+                    Production Readiness Checklist
+                </div>
+                <ul style="margin: 0;">
+                    <li>✅ Multi-stage build implementato</li>
+                    <li>✅ Immagini Alpine per dimensioni ridotte</li>
+                    <li>✅ .dockerignore configurato</li>
+                    <li>✅ Non esegue come root user</li>
+                    <li>✅ Health checks configurati</li>
+                    <li>✅ Secrets gestiti correttamente</li>
+                    <li>✅ Logging strutturato</li>
+                    <li>✅ Security scan passato (Trivy, Snyk)</li>
+                    <li>✅ Dimensione immagine < 500MB</li>
+                    <li>✅ Build time < 5 minuti</li>
+                </ul>
+            </div>
+
+            <h2>Tools Essenziali per Docker Development</h2>
+            <ul>
+                <li><strong>Dive</strong>: Analizza layer e trova bloat (<code>dive image:tag</code>)</li>
+                <li><strong>Trivy</strong>: Security scanner per vulnerabilità</li>
+                <li><strong>Hadolint</strong>: Linter per Dockerfile</li>
+                <li><strong>Docker Scout</strong>: Analisi sicurezza immagini</li>
+                <li><strong>Lazydocker</strong>: TUI per gestione container</li>
+            </ul>
+
+            <h2>La Mia Esperienza in Produzione</h2>
+            <p>
+                Implementando queste best practices in diversi progetti:
+            </p>
+
+            <h3>Risultati Misurabili</h3>
+            <ul>
+                <li><strong>Dimensioni immagini</strong>: Da 1.2GB a 350MB (70% riduzione)</li>
+                <li><strong>Build time</strong>: Da 8 minuti a 90 secondi (5x più veloce)</li>
+                <li><strong>Deploy time</strong>: Da 5 minuti a 45 secondi (6x più veloce)</li>
+                <li><strong>Costi infrastruttura</strong>: -40% (meno storage, meno bandwidth)</li>
+                <li><strong>Developer onboarding</strong>: Da 1 giorno a 15 minuti</li>
+            </ul>
+
+            <h2>Errori Comuni da Evitare</h2>
+            <ol>
+                <li><strong>Non usare latest tag</strong>: Sempre usa tag versioned</li>
+                <li><strong>Container bloat</strong>: Rimuovi cache e file temporanei</li>
+                <li><strong>Too many layers</strong>: Combina comandi RUN correlati</li>
+                <li><strong>Build secrets leak</strong>: Usa multi-stage builds</li>
+                <li><strong>Porta hardcoded</strong>: Usa variabili ambiente</li>
+            </ol>
+
+            <h2>Risorse Utili</h2>
+            <ul>
+                <li>Docker Documentation: <code>https://docs.docker.com/</code></li>
+                <li>Docker Best Practices: <code>https://docs.docker.com/develop/dev-best-practices/</code></li>
+                <li>Dive Tool: <code>https://github.com/wagoodman/dive</code></li>
+                <li>Hadolint: <code>https://github.com/hadolint/hadolint</code></li>
+            </ul>
+
+            <h2>Conclusione</h2>
+            <p>
+                Docker è uno strumento potentissimo, ma va usato correttamente. Queste best practices sono il risultato di anni di esperienza in produzione e ti faranno risparmiare tempo, denaro e mal di testa.
+            </p>
+
+            <h2>Hai bisogno di aiuto con Docker?</h2>
+            <p>
+                Se vuoi ottimizzare la tua infrastruttura Docker, implementare CI/CD con container, o migrare a Kubernetes, <a href="index.html#contact" style="color: var(--primary-color);">contattami per una consulenza</a>. Ho esperienza con Docker in produzione in diversi contesti e posso aiutarti a implementare le best practices nel tuo progetto.
+            </p>
+        </div>
+
+        <div class="author-box">
+            <h3 data-i18n="articleDocker.authorBoxTitle">Sull'Autore</h3>
+            <p data-i18n-html="articleDocker.authorBoxDesc">
+                <strong>Leonardo Pedron</strong> è un Software Engineer con oltre 4 anni di esperienza specializzato in Backend Development e DevOps. Ha implementato Docker in produzione per applicazioni ad alto traffico con focus su performance e security.
+            </p>
+            <div class="social-links">
+                <a href="https://github.com/LeonardoPedron" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/leonardo-pedron/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text" data-i18n-html="footer.text">
+                    Progettato e sviluppato da <strong>Leonardo Pedron</strong>
+                </p>
+                <p class="footer-copyright">
+                    &copy; <span id="currentYear"></span> Leonardo Pedron. <span data-i18n="footer.copyright">Tutti i diritti riservati.</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dockerfile.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script>
+        hljs.highlightAll();
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
