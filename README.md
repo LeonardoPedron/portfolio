@@ -1,5 +1,7 @@
 # Leonardo Pedron - Portfolio Professionale
 
+**Languages**: [🇮🇹 Italiano](README.md) | [🇬🇧 English](README.en.md) | [🇳🇴 Norsk](README.no.md)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PWA Ready](https://img.shields.io/badge/PWA-Ready-brightgreen.svg)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
 [![Multilingual](https://img.shields.io/badge/Languages-7-orange.svg)](#internazionalizzazione-i18n)
