@@ -1,551 +1,1027 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Leonardo Pedron - Software Engineer specializzato in backend development, database architecture e tecnologie web moderne. 4+ anni di esperienza.">
-    <meta name="keywords" content="Leonardo Pedron, Software Engineer, Backend Developer, Angular, PHP, Docker, PostgreSQL, MongoDB, MariaDB, GraphQL, REST API">
-    <meta name="author" content="Leonardo Pedron">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Leonardo Pedron - Software Engineer">
-    <meta property="og:description" content="Software Engineer specializzato in backend development e database architecture">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://leonardopedron.github.io">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Leonardo Pedron - Software Engineer">
-    <meta name="twitter:description" content="Software Engineer specializzato in backend development e database architecture">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Leonardo Pedron - Software Engineer specializzato in backend development, database architecture e tecnologie web moderne. 4+ anni di esperienza."
+    />
+    <meta
+      name="keywords"
+      content="Leonardo Pedron, Software Engineer, Backend Developer, Angular, PHP, Docker, PostgreSQL, MongoDB, MariaDB, GraphQL, REST API"
+    />
+    <meta name="author" content="Leonardo Pedron" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Leonardo Pedron - Software Engineer" />
+    <meta
+      property="og:description"
+      content="Software Engineer specializzato in backend development e database architecture"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://leonardopedron.github.io" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Leonardo Pedron - Software Engineer" />
+    <meta
+      name="twitter:description"
+      content="Software Engineer specializzato in backend development e database architecture"
+    />
 
     <title>Leonardo Pedron - Software Engineer | Backend Developer</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="manifest" href="manifest.json" />
 
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://unpkg.com" crossorigin />
 
-    <link rel="preload" href="css/styles.css" as="style">
+    <link rel="preload" href="css/styles.css" as="style" />
 
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css" />
     <script>
-        // Set theme immediately to avoid flash
-        const theme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', theme);
+      // Set theme immediately to avoid flash
+      const theme = localStorage.getItem("theme") || "dark";
+      document.documentElement.setAttribute("data-theme", theme);
     </script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400&display=swap" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" media="print" onload="this.media='all'">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/aos@2.3.4/dist/aos.css"
+      media="print"
+      onload="this.media='all'"
+    />
 
     <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400&display=swap">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400&display=swap"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      />
+      <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
     </noscript>
-</head>
-<body>
+  </head>
+  <body>
     <div class="cursor-dot" id="cursorDot"></div>
     <div class="cursor-outline" id="cursorOutline"></div>
 
     <nav class="navbar" id="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="#home">LP<span class="dot">.</span></a>
-            </div>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#home" class="nav-link" data-i18n="nav.home">Home</a></li>
-                <li><a href="#about" class="nav-link" data-i18n="nav.about">Chi Sono</a></li>
-                <li><a href="#skills" class="nav-link" data-i18n="nav.skills">Competenze</a></li>
-                <li><a href="#experience" class="nav-link" data-i18n="nav.experience">Esperienza</a></li>
-                <li><a href="#projects" class="nav-link" data-i18n="nav.projects">Progetti</a></li>
-                <li><a href="#blog" class="nav-link" data-i18n="nav.blog">Articoli</a></li>
-                <li><a href="#contact" class="nav-link" data-i18n="nav.contact">Contatti</a></li>
-                <li class="language-selector">
-                    <button id="langToggle" class="lang-toggle" aria-label="Change language">
-                        <i class="fas fa-globe"></i>
-                        <span id="currentLang">IT</span>
-                    </button>
-                    <ul class="lang-menu" id="langMenu">
-                        <li><button data-lang="it">🇮🇹 Italiano</button></li>
-                        <li><button data-lang="en">🇬🇧 English</button></li>
-                        <li><button data-lang="es">🇪🇸 Español</button></li>
-                        <li><button data-lang="de">🇩🇪 Deutsch</button></li>
-                        <li><button data-lang="fr">🇫🇷 Français</button></li>
-                        <li><button data-lang="no">🇳🇴 Norsk</button></li>
-                        <li><button data-lang="ro">🇷🇴 Română</button></li>
-                    </ul>
-                </li>
-                <li>
-                    <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </li>
-            </ul>
+      <div class="container">
+        <div class="nav-brand">
+          <a href="#home">LP<span class="dot">.</span></a>
         </div>
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle navigation"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-menu" id="navMenu">
+          <li>
+            <a href="#home" class="nav-link" data-i18n="nav.home">Home</a>
+          </li>
+          <li>
+            <a href="#about" class="nav-link" data-i18n="nav.about">Chi Sono</a>
+          </li>
+          <li>
+            <a href="#skills" class="nav-link" data-i18n="nav.skills"
+              >Competenze</a
+            >
+          </li>
+          <li>
+            <a href="#experience" class="nav-link" data-i18n="nav.experience"
+              >Esperienza</a
+            >
+          </li>
+          <li>
+            <a href="#projects" class="nav-link" data-i18n="nav.projects"
+              >Progetti</a
+            >
+          </li>
+          <li>
+            <a href="#blog" class="nav-link" data-i18n="nav.blog">Articoli</a>
+          </li>
+          <li>
+            <a href="#contact" class="nav-link" data-i18n="nav.contact"
+              >Contatti</a
+            >
+          </li>
+          <li class="language-selector">
+            <button
+              id="langToggle"
+              class="lang-toggle"
+              aria-label="Change language"
+            >
+              <i class="fas fa-globe"></i>
+              <span id="currentLang">IT</span>
+            </button>
+            <ul class="lang-menu" id="langMenu">
+              <li><button data-lang="it">🇮🇹 Italiano</button></li>
+              <li><button data-lang="en">🇬🇧 English</button></li>
+              <li><button data-lang="es">🇪🇸 Español</button></li>
+              <li><button data-lang="de">🇩🇪 Deutsch</button></li>
+              <li><button data-lang="fr">🇫🇷 Français</button></li>
+              <li><button data-lang="no">🇳🇴 Norsk</button></li>
+              <li><button data-lang="ro">🇷🇴 Română</button></li>
+            </ul>
+          </li>
+          <li>
+            <button
+              id="themeToggle"
+              class="theme-toggle"
+              aria-label="Toggle theme"
+            >
+              <i class="fas fa-moon"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <section id="home" class="hero">
-        <canvas id="particlesCanvas" class="particles-canvas"></canvas>
-        <div class="hero-background"></div>
-        <div class="container">
-            <div class="hero-content" data-aos="fade-up">
-                <p class="hero-greeting" data-i18n="hero.greeting">Ciao, mi chiamo</p>
-                <h1 class="hero-title">Leonardo Pedron<span class="cursor">|</span></h1>
-                <h2 class="hero-subtitle" data-i18n="hero.subtitle">Software Engineer</h2>
-                <p class="hero-description" data-i18n-html="hero.description">
-                    Specializzato in <span class="highlight">Backend Development</span> e <span class="highlight">Database Architecture</span>.
-                    Trasformo idee complesse in soluzioni scalabili e performanti.
-                </p>
-                <div class="hero-cta">
-                    <a href="#contact" class="btn btn-primary" data-i18n-html="hero.contactBtn">
-                        <i class="fas fa-envelope"></i> Contattami
-                    </a>
-                    <a href="#about" class="btn btn-secondary" data-i18n-html="hero.learnMoreBtn">
-                        <i class="fas fa-user"></i> Scopri di più
-                    </a>
-                </div>
-                <div class="hero-social">
-                    <a href="https://github.com/LeonardoPedron" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/leonardo-pedron/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="200">
-                <a href="#about">
-                    <div class="mouse">
-                        <div class="wheel"></div>
-                    </div>
-                    <p data-i18n="hero.scrollDown">Scroll Down</p>
-                </a>
-            </div>
+      <canvas id="particlesCanvas" class="particles-canvas"></canvas>
+      <div class="hero-background"></div>
+      <div class="container">
+        <div class="hero-content" data-aos="fade-up">
+          <p class="hero-greeting" data-i18n="hero.greeting">Ciao, mi chiamo</p>
+          <h1 class="hero-title">
+            Leonardo Pedron<span class="cursor">|</span>
+          </h1>
+          <h2 class="hero-subtitle" data-i18n="hero.subtitle">
+            Software Engineer
+          </h2>
+          <p class="hero-description" data-i18n-html="hero.description">
+            Specializzato in
+            <span class="highlight">Backend Development</span> e
+            <span class="highlight">Database Architecture</span>. Trasformo idee
+            complesse in soluzioni scalabili e performanti.
+          </p>
+          <div class="hero-cta">
+            <a
+              href="#contact"
+              class="btn btn-primary"
+              data-i18n-html="hero.contactBtn"
+            >
+              <i class="fas fa-envelope"></i> Contattami
+            </a>
+            <a
+              href="#about"
+              class="btn btn-secondary"
+              data-i18n-html="hero.learnMoreBtn"
+            >
+              <i class="fas fa-user"></i> Scopri di più
+            </a>
+          </div>
+          <div class="hero-social">
+            <a
+              href="https://github.com/LeonardoPedron"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <i class="fab fa-github"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/leonardo-pedron/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
         </div>
+        <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="200">
+          <a href="#about">
+            <div class="mouse">
+              <div class="wheel"></div>
+            </div>
+            <p data-i18n="hero.scrollDown">Scroll Down</p>
+          </a>
+        </div>
+      </div>
     </section>
 
     <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">
-                <span class="title-number">01.</span> <span data-i18n="about.title">Chi Sono</span>
-            </h2>
-            <div class="about-content">
-                <div class="about-text" data-aos="fade-right">
-                    <p data-i18n-html="about.paragraph1">
-                        Sono un <strong>Software Engineer</strong> con oltre <strong>4 anni di esperienza</strong>
-                        in diverse aziende, dove ho sviluppato competenze solide nel backend development e nella gestione
-                        di database complessi.
-                    </p>
-                    <p data-i18n-html="about.paragraph2">
-                        La mia passione è costruire <strong>architetture robuste e scalabili</strong>, con particolare
-                        attenzione all'ottimizzazione delle performance e alla qualità del codice. Mi specializo in
-                        soluzioni backend, progettazione di database relazionali e non relazionali, e nello sviluppo
-                        di REST API performanti.
-                    </p>
-                    <p data-i18n-html="about.paragraph3">
-                        Lavoro quotidianamente con tecnologie moderne come <strong>Docker</strong>, <strong>GraphQL</strong>
-                        con <strong>Hasura</strong>, e diversi database tra cui <strong>PostgreSQL</strong>,
-                        <strong>MariaDB</strong> e <strong>MongoDB</strong>.
-                    </p>
-                    <p data-i18n-html="about.paragraph4">
-                        Utilizzo sistemi di versioning come <strong>Git</strong> con piattaforme quali GitHub, GitLab
-                        e Bitbucket per garantire un workflow di sviluppo efficiente e collaborativo.
-                    </p>
-                    <div class="about-highlight">
-                        <i class="fas fa-server"></i>
-                        <p><strong data-i18n="about.focusLabel">Focus principale:</strong> <span data-i18n="about.focusValue">Backend Development & Database Architecture</span></p>
-                    </div>
-                </div>
-                <div class="about-image" data-aos="fade-left">
-                    <div class="image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=600&fit=crop&q=80" alt="Developer workspace" loading="lazy">
-                    </div>
-                </div>
+      <div class="container">
+        <h2 class="section-title" data-aos="fade-up">
+          <span class="title-number">01.</span>
+          <span data-i18n="about.title">Chi Sono</span>
+        </h2>
+        <div class="about-content">
+          <div class="about-text" data-aos="fade-right">
+            <p data-i18n-html="about.paragraph1">
+              Sono un <strong>Software Engineer</strong> con oltre
+              <strong>4 anni di esperienza</strong>
+              in diverse aziende, dove ho sviluppato competenze solide nel
+              backend development e nella gestione di database complessi.
+            </p>
+            <p data-i18n-html="about.paragraph2">
+              La mia passione è costruire
+              <strong>architetture robuste e scalabili</strong>, con particolare
+              attenzione all'ottimizzazione delle performance e alla qualità del
+              codice. Mi specializo in soluzioni backend, progettazione di
+              database relazionali e non relazionali, e nello sviluppo di REST
+              API performanti.
+            </p>
+            <p data-i18n-html="about.paragraph3">
+              Lavoro quotidianamente con tecnologie moderne come
+              <strong>Docker</strong>, <strong>GraphQL</strong> con
+              <strong>Hasura</strong>, e diversi database tra cui
+              <strong>PostgreSQL</strong>, <strong>MariaDB</strong> e
+              <strong>MongoDB</strong>.
+            </p>
+            <p data-i18n-html="about.paragraph4">
+              Utilizzo sistemi di versioning come <strong>Git</strong> con
+              piattaforme quali GitHub, GitLab e Bitbucket per garantire un
+              workflow di sviluppo efficiente e collaborativo.
+            </p>
+            <div class="about-highlight">
+              <i class="fas fa-server"></i>
+              <p>
+                <strong data-i18n="about.focusLabel">Focus principale:</strong>
+                <span data-i18n="about.focusValue"
+                  >Backend Development & Database Architecture</span
+                >
+              </p>
             </div>
+          </div>
+          <div class="about-image" data-aos="fade-left">
+            <div class="image-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=600&fit=crop&q=80"
+                alt="Developer workspace"
+                loading="lazy"
+              />
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <section id="skills" class="skills">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">
-                <span class="title-number">02.</span> <span data-i18n="skills.title">Competenze Tecniche</span>
-            </h2>
+      <div class="container">
+        <h2 class="section-title" data-aos="fade-up">
+          <span class="title-number">02.</span>
+          <span data-i18n="skills.title">Competenze Tecniche</span>
+        </h2>
 
-            <div class="skills-grid">
-                <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
-                    <div class="category-icon">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <h3 data-i18n="skills.backend">Backend & Linguaggi</h3>
-                    <ul class="skill-list">
-                        <li><i class="fas fa-check-circle"></i> <a href="https://www.php.net/" target="_blank" rel="noopener noreferrer" class="skill-link">PHP</a> & <a href="https://laravel.com/" target="_blank" rel="noopener noreferrer" class="skill-link">Laravel</a></li>
-                        <li><i class="fas fa-check-circle"></i> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer" class="skill-link">JavaScript</a> / <a href="https://nodejs.org/" target="_blank" rel="noopener noreferrer" class="skill-link">Node.js</a></li>
-                        <li><i class="fas fa-check-circle"></i> <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer" class="skill-link">TypeScript</a></li>
-                        <li><i class="fas fa-check-circle"></i> REST API Design</li>
-                        <li><i class="fas fa-check-circle"></i> <a href="https://graphql.org/" target="_blank" rel="noopener noreferrer" class="skill-link">GraphQL</a> & <a href="https://hasura.io/" target="_blank" rel="noopener noreferrer" class="skill-link">Hasura</a></li>
-                    </ul>
-                </div>
-
-                <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
-                    <div class="category-icon">
-                        <i class="fas fa-laptop-code"></i>
-                    </div>
-                    <h3 data-i18n="skills.frontend">Frontend</h3>
-                    <ul class="skill-list">
-                        <li><i class="fas fa-check-circle"></i> HTML5 & CSS3</li>
-                        <li><i class="fas fa-check-circle"></i> <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer" class="skill-link">TypeScript</a> & JavaScript (ES6+)</li>
-                        <li><i class="fas fa-check-circle"></i> <a href="https://angular.dev/" target="_blank" rel="noopener noreferrer" class="skill-link">Angular</a></li>
-                        <li><i class="fas fa-check-circle"></i> <a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer" class="skill-link">TailwindCSS</a></li>
-                        <li><i class="fas fa-check-circle"></i> <a href="https://primeng.org/" target="_blank" rel="noopener noreferrer" class="skill-link">PrimeNG</a> & <a href="https://getbootstrap.com/" target="_blank" rel="noopener noreferrer" class="skill-link">Bootstrap</a></li>
-                    </ul>
-                </div>
-
-                <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
-                    <div class="category-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3 data-i18n="skills.database">Database</h3>
-                    <ul class="skill-list">
-                        <li><i class="fas fa-check-circle"></i> <a href="https://www.postgresql.org/" target="_blank" rel="noopener noreferrer" class="skill-link">PostgreSQL</a></li>
-                        <li><i class="fas fa-check-circle"></i> <a href="https://mariadb.org/" target="_blank" rel="noopener noreferrer" class="skill-link">MariaDB</a></li>
-                        <li><i class="fas fa-check-circle"></i> <a href="https://www.mongodb.com/" target="_blank" rel="noopener noreferrer" class="skill-link">MongoDB</a></li>
-                        <li><i class="fas fa-check-circle"></i> DB Relazionali & NoSQL</li>
-                    </ul>
-                </div>
-
-                <div class="skill-category" data-aos="fade-up" data-aos-delay="400">
-                    <div class="category-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h3 data-i18n="skills.devops">DevOps & Tools</h3>
-                    <ul class="skill-list">
-                        <li><i class="fas fa-check-circle"></i> <a href="https://www.docker.com/" target="_blank" rel="noopener noreferrer" class="skill-link">Docker</a> & Containerization</li>
-                        <li><i class="fas fa-check-circle"></i> <a href="https://git-scm.com/" target="_blank" rel="noopener noreferrer" class="skill-link">Git</a> (<a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="skill-link">GitHub</a>/<a href="https://gitlab.com/" target="_blank" rel="noopener noreferrer" class="skill-link">GitLab</a>/<a href="https://bitbucket.org/" target="_blank" rel="noopener noreferrer" class="skill-link">Bitbucket</a>)</li>
-                        <li><i class="fas fa-check-circle"></i> CI/CD Pipelines</li>
-                        <li><i class="fas fa-check-circle"></i> Linux/Unix Systems</li>
-                    </ul>
-                </div>
+        <div class="skills-grid">
+          <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+            <div class="category-icon">
+              <i class="fas fa-server"></i>
             </div>
+            <h3 data-i18n="skills.backend">Backend & Linguaggi</h3>
+            <ul class="skill-list">
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <a
+                  href="https://www.php.net/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >PHP</a
+                >
+                &
+                <a
+                  href="https://laravel.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >Laravel</a
+                >
+              </li>
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >JavaScript</a
+                >
+                /
+                <a
+                  href="https://nodejs.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >Node.js</a
+                >
+              </li>
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <a
+                  href="https://www.typescriptlang.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >TypeScript</a
+                >
+              </li>
+              <li><i class="fas fa-check-circle"></i> REST API Design</li>
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <a
+                  href="https://graphql.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >GraphQL</a
+                >
+                &
+                <a
+                  href="https://hasura.io/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >Hasura</a
+                >
+              </li>
+            </ul>
+          </div>
 
-            <div class="expertise-section" data-aos="fade-up">
-                <h3 class="expertise-title" data-i18n="skills.expertise">Aree di Expertise</h3>
-                <div class="expertise-tags">
-                    <span class="tag" data-i18n="skills.tag1">Database Architecture</span>
-                    <span class="tag" data-i18n="skills.tag2">REST API Development</span>
-                    <span class="tag" data-i18n="skills.tag3">GraphQL Implementation</span>
-                    <span class="tag" data-i18n="skills.tag4">Laravel Framework</span>
-                    <span class="tag" data-i18n="skills.tag5">TypeScript Development</span>
-                    <span class="tag" data-i18n="skills.tag6">Performance Optimization</span>
-                    <span class="tag" data-i18n="skills.tag7">Microservices</span>
-                    <span class="tag" data-i18n="skills.tag8">Docker Containerization</span>
-                    <span class="tag" data-i18n="skills.tag9">Database Design</span>
-                    <span class="tag" data-i18n="skills.tag10">Backend Security</span>
-                    <span class="tag" data-i18n="skills.tag11">TailwindCSS</span>
-                    <span class="tag" data-i18n="skills.tag12">Query Optimization</span>
-                    <span class="tag" data-i18n="skills.tag13">Version Control</span>
-                </div>
+          <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+            <div class="category-icon">
+              <i class="fas fa-laptop-code"></i>
             </div>
+            <h3 data-i18n="skills.frontend">Frontend</h3>
+            <ul class="skill-list">
+              <li><i class="fas fa-check-circle"></i> HTML5 & CSS3</li>
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <a
+                  href="https://www.typescriptlang.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >TypeScript</a
+                >
+                & JavaScript (ES6+)
+              </li>
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <a
+                  href="https://angular.dev/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >Angular</a
+                >
+              </li>
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <a
+                  href="https://tailwindcss.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >TailwindCSS</a
+                >
+              </li>
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <a
+                  href="https://primeng.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >PrimeNG</a
+                >
+                &
+                <a
+                  href="https://getbootstrap.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >Bootstrap</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
+            <div class="category-icon">
+              <i class="fas fa-database"></i>
+            </div>
+            <h3 data-i18n="skills.database">Database</h3>
+            <ul class="skill-list">
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <a
+                  href="https://www.postgresql.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >PostgreSQL</a
+                >
+              </li>
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <a
+                  href="https://mariadb.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >MariaDB</a
+                >
+              </li>
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <a
+                  href="https://www.mongodb.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >MongoDB</a
+                >
+              </li>
+              <li>
+                <i class="fas fa-check-circle"></i> DB Relazionali & NoSQL
+              </li>
+            </ul>
+          </div>
+
+          <div class="skill-category" data-aos="fade-up" data-aos-delay="400">
+            <div class="category-icon">
+              <i class="fas fa-cogs"></i>
+            </div>
+            <h3 data-i18n="skills.devops">DevOps & Tools</h3>
+            <ul class="skill-list">
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <a
+                  href="https://www.docker.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >Docker</a
+                >
+                & Containerization
+              </li>
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <a
+                  href="https://git-scm.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >Git</a
+                >
+                (<a
+                  href="https://github.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >GitHub</a
+                >/<a
+                  href="https://gitlab.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >GitLab</a
+                >/<a
+                  href="https://bitbucket.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="skill-link"
+                  >Bitbucket</a
+                >)
+              </li>
+              <li><i class="fas fa-check-circle"></i> CI/CD Pipelines</li>
+              <li><i class="fas fa-check-circle"></i> Linux/Unix Systems</li>
+            </ul>
+          </div>
         </div>
+
+        <div class="expertise-section" data-aos="fade-up">
+          <h3 class="expertise-title" data-i18n="skills.expertise">
+            Aree di Expertise
+          </h3>
+          <div class="expertise-tags">
+            <span class="tag" data-i18n="skills.tag1"
+              >Database Architecture</span
+            >
+            <span class="tag" data-i18n="skills.tag2"
+              >REST API Development</span
+            >
+            <span class="tag" data-i18n="skills.tag3"
+              >GraphQL Implementation</span
+            >
+            <span class="tag" data-i18n="skills.tag4">Laravel Framework</span>
+            <span class="tag" data-i18n="skills.tag5"
+              >TypeScript Development</span
+            >
+            <span class="tag" data-i18n="skills.tag6"
+              >Performance Optimization</span
+            >
+            <span class="tag" data-i18n="skills.tag7">Microservices</span>
+            <span class="tag" data-i18n="skills.tag8"
+              >Docker Containerization</span
+            >
+            <span class="tag" data-i18n="skills.tag9">Database Design</span>
+            <span class="tag" data-i18n="skills.tag10">Backend Security</span>
+            <span class="tag" data-i18n="skills.tag11">TailwindCSS</span>
+            <span class="tag" data-i18n="skills.tag12">Query Optimization</span>
+            <span class="tag" data-i18n="skills.tag13">Version Control</span>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="experience" class="experience">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">
-                <span class="title-number">03.</span> <span data-i18n="experience.title">Esperienza Professionale</span>
-            </h2>
+      <div class="container">
+        <h2 class="section-title" data-aos="fade-up">
+          <span class="title-number">03.</span>
+          <span data-i18n="experience.title">Esperienza Professionale</span>
+        </h2>
 
-            <div class="experience-content" data-aos="fade-up">
-                <div class="experience-stats">
-                    <div class="stat-item">
-                        <div class="stat-number" data-target="4">0</div>
-                        <div class="stat-label" data-i18n="experience.yearsLabel">Anni di Esperienza</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" data-target="10">0</div>
-                        <div class="stat-label" data-i18n="experience.techLabel">Tecnologie</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" data-target="50">0</div>
-                        <div class="stat-label" data-i18n="experience.projectsLabel">Progetti Completati</div>
-                    </div>
-                </div>
-
-                <div class="experience-description">
-                    <p data-i18n="experience.description">
-                        Nel corso della mia carriera professionale ho lavorato in diverse aziende, acquisendo
-                        esperienza in contesti differenti e affrontando sfide tecniche sempre più complesse.
-                    </p>
-                    <div class="experience-highlights">
-                        <div class="highlight-item">
-                            <i class="fas fa-database"></i>
-                            <div>
-                                <h4 data-i18n="experience.h1">Database Architecture</h4>
-                                <p data-i18n="experience.h1desc">Progettazione e ottimizzazione di architetture database complesse, sia relazionali che NoSQL</p>
-                            </div>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-code"></i>
-                            <div>
-                                <h4 data-i18n="experience.h2">Backend Development</h4>
-                                <p data-i18n="experience.h2desc">Sviluppo di REST API robuste e scalabili, con focus su performance e sicurezza</p>
-                            </div>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fab fa-docker"></i>
-                            <div>
-                                <h4 data-i18n="experience.h3">DevOps & Containerization</h4>
-                                <p data-i18n="experience.h3desc">Implementazione di soluzioni Docker per ambienti di sviluppo e produzione</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="experience-content" data-aos="fade-up">
+          <div class="experience-stats">
+            <div class="stat-item">
+              <div class="stat-number" data-target="4">0</div>
+              <div class="stat-label" data-i18n="experience.yearsLabel">
+                Anni di Esperienza
+              </div>
             </div>
+            <div class="stat-item">
+              <div class="stat-number" data-target="10">0</div>
+              <div class="stat-label" data-i18n="experience.techLabel">
+                Tecnologie
+              </div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" data-target="50">0</div>
+              <div class="stat-label" data-i18n="experience.projectsLabel">
+                Progetti Completati
+              </div>
+            </div>
+          </div>
+
+          <div class="experience-description">
+            <p data-i18n="experience.description">
+              Nel corso della mia carriera professionale ho lavorato in diverse
+              aziende, acquisendo esperienza in contesti differenti e
+              affrontando sfide tecniche sempre più complesse.
+            </p>
+            <div class="experience-highlights">
+              <div class="highlight-item">
+                <i class="fas fa-database"></i>
+                <div>
+                  <h4 data-i18n="experience.h1">Database Architecture</h4>
+                  <p data-i18n="experience.h1desc">
+                    Progettazione e ottimizzazione di architetture database
+                    complesse, sia relazionali che NoSQL
+                  </p>
+                </div>
+              </div>
+              <div class="highlight-item">
+                <i class="fas fa-code"></i>
+                <div>
+                  <h4 data-i18n="experience.h2">Backend Development</h4>
+                  <p data-i18n="experience.h2desc">
+                    Sviluppo di REST API robuste e scalabili, con focus su
+                    performance e sicurezza
+                  </p>
+                </div>
+              </div>
+              <div class="highlight-item">
+                <i class="fab fa-docker"></i>
+                <div>
+                  <h4 data-i18n="experience.h3">DevOps & Containerization</h4>
+                  <p data-i18n="experience.h3desc">
+                    Implementazione di soluzioni Docker per ambienti di sviluppo
+                    e produzione
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">
-                <span class="title-number">04.</span> <span data-i18n="projects.title">Progetti in Evidenza</span>
-            </h2>
+      <div class="container">
+        <h2 class="section-title" data-aos="fade-up">
+          <span class="title-number">04.</span>
+          <span data-i18n="projects.title">Progetti in Evidenza</span>
+        </h2>
 
-            <div class="projects-grid">
-                <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=500&fit=crop&q=80" alt="REST API Architecture" loading="lazy">
-                        <div class="project-overlay">
-                            <div class="project-tech">
-                                <span class="tech-tag">PHP</span>
-                                <span class="tech-tag">PostgreSQL</span>
-                                <span class="tech-tag">Docker</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 data-i18n="projects.p1title">Backend REST API</h3>
-                        <p data-i18n="projects.p1desc">Sistema di gestione database scalabile con architettura microservizi, implementazione di REST API performanti e ottimizzazione query complesse.</p>
-                        <div class="project-stats">
-                            <span data-i18n-html="projects.p1stat1"><i class="fas fa-database"></i> Database Architecture</span>
-                            <span data-i18n-html="projects.p1stat2"><i class="fas fa-rocket"></i> High Performance</span>
-                        </div>
-                    </div>
+        <div class="projects-grid">
+          <a
+            href="https://github.com/LeonardoPedron/api-rest-backend"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+              <div class="project-image">
+                <img
+                  src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=500&fit=crop&q=80"
+                  alt="REST API Architecture"
+                  loading="lazy"
+                />
+                <div class="project-overlay">
+                  <div class="project-tech">
+                    <span class="tech-tag">PHP</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">Docker</span>
+                  </div>
                 </div>
-
-                <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop&q=80" alt="GraphQL API Gateway" loading="lazy">
-                        <div class="project-overlay">
-                            <div class="project-tech">
-                                <span class="tech-tag">GraphQL</span>
-                                <span class="tech-tag">Hasura</span>
-                                <span class="tech-tag">Node.js</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 data-i18n="projects.p2title">GraphQL API Gateway</h3>
-                        <p data-i18n="projects.p2desc">Implementazione di API Gateway con Hasura per gestione dati real-time, ottimizzazione delle query e integrazione con sistemi legacy.</p>
-                        <div class="project-stats">
-                            <span data-i18n-html="projects.p2stat1"><i class="fas fa-bolt"></i> Real-time</span>
-                            <span data-i18n-html="projects.p2stat2"><i class="fas fa-shield-alt"></i> Secure</span>
-                        </div>
-                    </div>
+              </div>
+              <div class="project-content">
+                <h3 data-i18n="projects.p1title">Backend REST API</h3>
+                <p data-i18n="projects.p1desc">
+                  Sistema di gestione database scalabile con architettura
+                  microservizi, implementazione di REST API performanti e
+                  ottimizzazione query complesse.
+                </p>
+                <div class="project-stats">
+                  <span data-i18n-html="projects.p1stat1"
+                    ><i class="fas fa-database"></i> Database Architecture</span
+                  >
+                  <span data-i18n-html="projects.p1stat2"
+                    ><i class="fas fa-rocket"></i> High Performance</span
+                  >
                 </div>
-
-                <div class="project-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop&q=80" alt="Enterprise Web Application" loading="lazy">
-                        <div class="project-overlay">
-                            <div class="project-tech">
-                                <span class="tech-tag">Angular</span>
-                                <span class="tech-tag">TypeScript</span>
-                                <span class="tech-tag">PrimeNG</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 data-i18n="projects.p3title">Enterprise Web App</h3>
-                        <p data-i18n="projects.p3desc">Applicazione web enterprise completa con interfaccia moderna, gestione stato complessa e integrazione API multiple.</p>
-                        <div class="project-stats">
-                            <span data-i18n-html="projects.p3stat1"><i class="fas fa-users"></i> Multi-user</span>
-                            <span data-i18n-html="projects.p3stat2"><i class="fas fa-mobile-alt"></i> Responsive</span>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
+          </a>
+
+          <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop&q=80"
+                alt="GraphQL API Gateway"
+                loading="lazy"
+              />
+              <div class="project-overlay">
+                <div class="project-tech">
+                  <span class="tech-tag">GraphQL</span>
+                  <span class="tech-tag">Hasura</span>
+                  <span class="tech-tag">Node.js</span>
+                </div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3 data-i18n="projects.p2title">GraphQL API Gateway</h3>
+              <p data-i18n="projects.p2desc">
+                Implementazione di API Gateway con Hasura per gestione dati
+                real-time, ottimizzazione delle query e integrazione con sistemi
+                legacy.
+              </p>
+              <div class="project-stats">
+                <span data-i18n-html="projects.p2stat1"
+                  ><i class="fas fa-bolt"></i> Real-time</span
+                >
+                <span data-i18n-html="projects.p2stat2"
+                  ><i class="fas fa-shield-alt"></i> Secure</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop&q=80"
+                alt="Enterprise Web Application"
+                loading="lazy"
+              />
+              <div class="project-overlay">
+                <div class="project-tech">
+                  <span class="tech-tag">Angular</span>
+                  <span class="tech-tag">TypeScript</span>
+                  <span class="tech-tag">PrimeNG</span>
+                </div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3 data-i18n="projects.p3title">Enterprise Web App</h3>
+              <p data-i18n="projects.p3desc">
+                Applicazione web enterprise completa con interfaccia moderna,
+                gestione stato complessa e integrazione API multiple.
+              </p>
+              <div class="project-stats">
+                <span data-i18n-html="projects.p3stat1"
+                  ><i class="fas fa-users"></i> Multi-user</span
+                >
+                <span data-i18n-html="projects.p3stat2"
+                  ><i class="fas fa-mobile-alt"></i> Responsive</span
+                >
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <section id="blog" class="blog">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">
-                <span class="title-number">05.</span> <span data-i18n="blog.title">Articoli & Insights</span>
-            </h2>
-            <p class="blog-intro" data-aos="fade-up" data-i18n="blog.intro">
-                Condivido la mia esperienza e conoscenza tecnica attraverso articoli approfonditi su database architecture, backend development e best practices.
-            </p>
+      <div class="container">
+        <h2 class="section-title" data-aos="fade-up">
+          <span class="title-number">05.</span>
+          <span data-i18n="blog.title">Articoli & Insights</span>
+        </h2>
+        <p class="blog-intro" data-aos="fade-up" data-i18n="blog.intro">
+          Condivido la mia esperienza e conoscenza tecnica attraverso articoli
+          approfonditi su database architecture, backend development e best
+          practices.
+        </p>
 
-            <div class="blog-search-container" data-aos="fade-up">
-                <div class="blog-search">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="blogSearch" data-i18n-placeholder="blog.searchPlaceholder" placeholder="Cerca articoli per titolo, descrizione o tag...">
-                </div>
-            </div>
-
-            <div class="blog-grid" id="blogGrid">
-                <article class="blog-card featured" data-aos="fade-up" data-aos-delay="100"
-                         data-date="2026-01" data-year="2026" data-month="01"
-                         data-tags="PostgreSQL,MongoDB,Database Design,Scalability"
-                         data-title-key="blog.b1title" data-desc-key="blog.b1desc">
-                    <div class="blog-badge" data-i18n="blog.featured">Featured</div>
-                    <div class="blog-image">
-                        <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&h=400&fit=crop&q=80" alt="Database Architecture" loading="lazy">
-                        <div class="blog-category" data-i18n="blog.b1cat">Database Architecture</div>
-                    </div>
-                    <div class="blog-content">
-                        <div class="blog-meta">
-                            <span><i class="far fa-calendar"></i> <span data-i18n="blog.b1date">Gennaio 2026</span></span>
-                            <span><i class="far fa-clock"></i> <span data-i18n="blog.b1time">8 min lettura</span></span>
-                        </div>
-                        <h3 data-i18n="blog.b1title">PostgreSQL vs MongoDB: Quando Scegliere un Database Relazionale o NoSQL</h3>
-                        <p data-i18n="blog.b1desc">Una guida completa per scegliere il database giusto per il tuo progetto. Analizziamo vantaggi, svantaggi e casi d'uso reali di PostgreSQL e MongoDB, con esempi pratici di architetture scalabili.</p>
-                        <div class="blog-tags">
-                            <span class="blog-tag" data-i18n="blog.b1tag1">PostgreSQL</span>
-                            <span class="blog-tag" data-i18n="blog.b1tag2">MongoDB</span>
-                            <span class="blog-tag" data-i18n="blog.b1tag3">Database Design</span>
-                            <span class="blog-tag" data-i18n="blog.b1tag4">Scalability</span>
-                        </div>
-                        <a href="blog-postgresql-vs-mongodb.html" class="blog-read-more" data-i18n="blog.readMore">
-                            Leggi l'articolo <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </article>
-
-                <article class="blog-card" data-aos="fade-up" data-aos-delay="200"
-                         data-date="2026-01" data-year="2026" data-month="01"
-                         data-tags="REST API,GraphQL,Hasura"
-                         data-title-key="blog.b2title" data-desc-key="blog.b2desc">
-                    <div class="blog-image">
-                        <img src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&h=400&fit=crop&q=80" alt="Backend Development" loading="lazy">
-                        <div class="blog-category" data-i18n="blog.b2cat">Backend Development</div>
-                    </div>
-                    <div class="blog-content">
-                        <div class="blog-meta">
-                            <span><i class="far fa-calendar"></i> <span data-i18n="blog.b2date">Gennaio 2026</span></span>
-                            <span><i class="far fa-clock"></i> <span data-i18n="blog.b2time">6 min lettura</span></span>
-                        </div>
-                        <h3 data-i18n="blog.b2title">REST API vs GraphQL: Quale Scegliere nel 2026?</h3>
-                        <p data-i18n="blog.b2desc">Confronto approfondito tra REST API e GraphQL. Scopri quando utilizzare ciascuna tecnologia, pattern di implementazione e come Hasura può accelerare lo sviluppo.</p>
-                        <div class="blog-tags">
-                            <span class="blog-tag" data-i18n="blog.b2tag1">REST API</span>
-                            <span class="blog-tag" data-i18n="blog.b2tag2">GraphQL</span>
-                            <span class="blog-tag" data-i18n="blog.b2tag3">Hasura</span>
-                        </div>
-                        <a href="blog-rest-api-vs-graphql.html" class="blog-read-more" data-i18n="blog.readMore">
-                            Leggi l'articolo <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </article>
-
-                <article class="blog-card" data-aos="fade-up" data-aos-delay="300"
-                         data-date="2026-01" data-year="2026" data-month="01"
-                         data-tags="Docker,DevOps,Best Practices"
-                         data-title-key="blog.b3title" data-desc-key="blog.b3desc">
-                    <div class="blog-image">
-                        <img src="https://images.unsplash.com/photo-1605745341112-85968b19335b?w=800&h=400&fit=crop&q=80" alt="Docker and DevOps" loading="lazy">
-                        <div class="blog-category" data-i18n="blog.b3cat">DevOps</div>
-                    </div>
-                    <div class="blog-content">
-                        <div class="blog-meta">
-                            <span><i class="far fa-calendar"></i> <span data-i18n="blog.b3date">Gennaio 2026</span></span>
-                            <span><i class="far fa-clock"></i> <span data-i18n="blog.b3time">10 min lettura</span></span>
-                        </div>
-                        <h3 data-i18n="blog.b3title">Docker per Backend Developers: Best Practices e Ottimizzazioni</h3>
-                        <p data-i18n="blog.b3desc">Come containerizzare applicazioni backend in modo efficiente, ottimizzare le immagini Docker e implementare ambienti di sviluppo consistenti.</p>
-                        <div class="blog-tags">
-                            <span class="blog-tag" data-i18n="blog.b3tag1">Docker</span>
-                            <span class="blog-tag" data-i18n="blog.b3tag2">DevOps</span>
-                            <span class="blog-tag" data-i18n="blog.b3tag3">Best Practices</span>
-                        </div>
-                        <a href="blog-docker-best-practices.html" class="blog-read-more" data-i18n="blog.readMore">
-                            Leggi l'articolo <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </article>
-            </div>
+        <div class="blog-search-container" data-aos="fade-up">
+          <div class="blog-search">
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              id="blogSearch"
+              data-i18n-placeholder="blog.searchPlaceholder"
+              placeholder="Cerca articoli per titolo, descrizione o tag..."
+            />
+          </div>
         </div>
+
+        <div class="blog-grid" id="blogGrid">
+          <article
+            class="blog-card featured"
+            data-aos="fade-up"
+            data-aos-delay="100"
+            data-date="2026-01"
+            data-year="2026"
+            data-month="01"
+            data-tags="PostgreSQL,MongoDB,Database Design,Scalability"
+            data-title-key="blog.b1title"
+            data-desc-key="blog.b1desc"
+          >
+            <div class="blog-badge" data-i18n="blog.featured">Featured</div>
+            <div class="blog-image">
+              <img
+                src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&h=400&fit=crop&q=80"
+                alt="Database Architecture"
+                loading="lazy"
+              />
+              <div class="blog-category" data-i18n="blog.b1cat">
+                Database Architecture
+              </div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span
+                  ><i class="far fa-calendar"></i>
+                  <span data-i18n="blog.b1date">Gennaio 2026</span></span
+                >
+                <span
+                  ><i class="far fa-clock"></i>
+                  <span data-i18n="blog.b1time">8 min lettura</span></span
+                >
+              </div>
+              <h3 data-i18n="blog.b1title">
+                PostgreSQL vs MongoDB: Quando Scegliere un Database Relazionale
+                o NoSQL
+              </h3>
+              <p data-i18n="blog.b1desc">
+                Una guida completa per scegliere il database giusto per il tuo
+                progetto. Analizziamo vantaggi, svantaggi e casi d'uso reali di
+                PostgreSQL e MongoDB, con esempi pratici di architetture
+                scalabili.
+              </p>
+              <div class="blog-tags">
+                <span class="blog-tag" data-i18n="blog.b1tag1">PostgreSQL</span>
+                <span class="blog-tag" data-i18n="blog.b1tag2">MongoDB</span>
+                <span class="blog-tag" data-i18n="blog.b1tag3"
+                  >Database Design</span
+                >
+                <span class="blog-tag" data-i18n="blog.b1tag4"
+                  >Scalability</span
+                >
+              </div>
+              <a
+                href="blog-postgresql-vs-mongodb.html"
+                class="blog-read-more"
+                data-i18n="blog.readMore"
+              >
+                Leggi l'articolo <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </article>
+
+          <article
+            class="blog-card"
+            data-aos="fade-up"
+            data-aos-delay="200"
+            data-date="2026-01"
+            data-year="2026"
+            data-month="01"
+            data-tags="REST API,GraphQL,Hasura"
+            data-title-key="blog.b2title"
+            data-desc-key="blog.b2desc"
+          >
+            <div class="blog-image">
+              <img
+                src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&h=400&fit=crop&q=80"
+                alt="Backend Development"
+                loading="lazy"
+              />
+              <div class="blog-category" data-i18n="blog.b2cat">
+                Backend Development
+              </div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span
+                  ><i class="far fa-calendar"></i>
+                  <span data-i18n="blog.b2date">Gennaio 2026</span></span
+                >
+                <span
+                  ><i class="far fa-clock"></i>
+                  <span data-i18n="blog.b2time">6 min lettura</span></span
+                >
+              </div>
+              <h3 data-i18n="blog.b2title">
+                REST API vs GraphQL: Quale Scegliere nel 2026?
+              </h3>
+              <p data-i18n="blog.b2desc">
+                Confronto approfondito tra REST API e GraphQL. Scopri quando
+                utilizzare ciascuna tecnologia, pattern di implementazione e
+                come Hasura può accelerare lo sviluppo.
+              </p>
+              <div class="blog-tags">
+                <span class="blog-tag" data-i18n="blog.b2tag1">REST API</span>
+                <span class="blog-tag" data-i18n="blog.b2tag2">GraphQL</span>
+                <span class="blog-tag" data-i18n="blog.b2tag3">Hasura</span>
+              </div>
+              <a
+                href="blog-rest-api-vs-graphql.html"
+                class="blog-read-more"
+                data-i18n="blog.readMore"
+              >
+                Leggi l'articolo <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </article>
+
+          <article
+            class="blog-card"
+            data-aos="fade-up"
+            data-aos-delay="300"
+            data-date="2026-01"
+            data-year="2026"
+            data-month="01"
+            data-tags="Docker,DevOps,Best Practices"
+            data-title-key="blog.b3title"
+            data-desc-key="blog.b3desc"
+          >
+            <div class="blog-image">
+              <img
+                src="https://images.unsplash.com/photo-1605745341112-85968b19335b?w=800&h=400&fit=crop&q=80"
+                alt="Docker and DevOps"
+                loading="lazy"
+              />
+              <div class="blog-category" data-i18n="blog.b3cat">DevOps</div>
+            </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span
+                  ><i class="far fa-calendar"></i>
+                  <span data-i18n="blog.b3date">Gennaio 2026</span></span
+                >
+                <span
+                  ><i class="far fa-clock"></i>
+                  <span data-i18n="blog.b3time">10 min lettura</span></span
+                >
+              </div>
+              <h3 data-i18n="blog.b3title">
+                Docker per Backend Developers: Best Practices e Ottimizzazioni
+              </h3>
+              <p data-i18n="blog.b3desc">
+                Come containerizzare applicazioni backend in modo efficiente,
+                ottimizzare le immagini Docker e implementare ambienti di
+                sviluppo consistenti.
+              </p>
+              <div class="blog-tags">
+                <span class="blog-tag" data-i18n="blog.b3tag1">Docker</span>
+                <span class="blog-tag" data-i18n="blog.b3tag2">DevOps</span>
+                <span class="blog-tag" data-i18n="blog.b3tag3"
+                  >Best Practices</span
+                >
+              </div>
+              <a
+                href="blog-docker-best-practices.html"
+                class="blog-read-more"
+                data-i18n="blog.readMore"
+              >
+                Leggi l'articolo <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
     </section>
 
     <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">
-                <span class="title-number">06.</span> <span data-i18n="contact.title">Contattami</span>
-            </h2>
+      <div class="container">
+        <h2 class="section-title" data-aos="fade-up">
+          <span class="title-number">06.</span>
+          <span data-i18n="contact.title">Contattami</span>
+        </h2>
 
-            <div class="contact-content-centered" data-aos="fade-up">
-                <p class="contact-intro" data-i18n="contact.intro">
-                    Sono sempre interessato a nuove opportunità e collaborazioni.
-                    Che tu abbia una domanda o voglia semplicemente salutarmi,
-                    la mia casella di posta è sempre aperta!
-                </p>
+        <div class="contact-content-centered" data-aos="fade-up">
+          <p class="contact-intro" data-i18n="contact.intro">
+            Sono sempre interessato a nuove opportunità e collaborazioni. Che tu
+            abbia una domanda o voglia semplicemente salutarmi, la mia casella
+            di posta è sempre aperta!
+          </p>
 
-                <div class="contact-details">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-linkedin"></i>
-                        </div>
-                        <div>
-                            <h4 data-i18n="contact.linkedinLabel">LinkedIn</h4>
-                            <a href="https://www.linkedin.com/in/leonardo-pedron/" target="_blank" rel="noopener noreferrer">leonardo-pedron</a>
-                        </div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-github"></i>
-                        </div>
-                        <div>
-                            <h4 data-i18n="contact.githubLabel">GitHub</h4>
-                            <a href="https://github.com/LeonardoPedron" target="_blank" rel="noopener noreferrer">LeonardoPedron</a>
-                        </div>
-                    </div>
-                </div>
+          <div class="contact-details">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fab fa-linkedin"></i>
+              </div>
+              <div>
+                <h4 data-i18n="contact.linkedinLabel">LinkedIn</h4>
+                <a
+                  href="https://www.linkedin.com/in/leonardo-pedron/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >leonardo-pedron</a
+                >
+              </div>
             </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fab fa-github"></i>
+              </div>
+              <div>
+                <h4 data-i18n="contact.githubLabel">GitHub</h4>
+                <a
+                  href="https://github.com/LeonardoPedron"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >LeonardoPedron</a
+                >
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-social">
-                    <a href="https://github.com/LeonardoPedron" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/leonardo-pedron/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                </div>
-                <p class="footer-text" data-i18n-html="footer.text">
-                    Progettato e sviluppato da <strong>Leonardo Pedron</strong>
-                </p>
-                <p class="footer-copyright">
-                    &copy; <span id="currentYear"></span> Leonardo Pedron. <span data-i18n="footer.copyright">Tutti i diritti riservati.</span>
-                </p>
-            </div>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-social">
+            <a
+              href="https://github.com/LeonardoPedron"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <i class="fab fa-github"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/leonardo-pedron/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+          <p class="footer-text" data-i18n-html="footer.text">
+            Progettato e sviluppato da <strong>Leonardo Pedron</strong>
+          </p>
+          <p class="footer-copyright">
+            &copy; <span id="currentYear"></span> Leonardo Pedron.
+            <span data-i18n="footer.copyright">Tutti i diritti riservati.</span>
+          </p>
         </div>
+      </div>
     </footer>
 
     <button id="scrollTopBtn" class="scroll-top" aria-label="Scroll to top">
-        <i class="fas fa-arrow-up"></i>
+      <i class="fas fa-arrow-up"></i>
     </button>
 
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
     <script src="js/i18n.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/interactive.js" defer></script>
-</body>
+  </body>
 </html>
