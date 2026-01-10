@@ -1782,30 +1782,26 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
-    transition: all var(--transition-base);
+    transition: transform var(--transition-base), background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+    transform: rotate(0deg);
+}
+
+.theme-toggle.light-mode {
+    transform: rotate(180deg);
 }
 
 .theme-toggle:hover {
     background-color: var(--primary-color);
     color: white;
-    transform: rotate(20deg) scale(1.1);
     border-color: var(--primary-color);
 }
 
-.theme-toggle.clicked {
-    animation: themeClickRotate 0.5s ease-in-out;
+.theme-toggle:hover:not(.light-mode) {
+    transform: rotate(0deg) scale(1.1);
 }
 
-@keyframes themeClickRotate {
-    0% {
-        transform: rotate(0deg) scale(1);
-    }
-    50% {
-        transform: rotate(180deg) scale(1.2);
-    }
-    100% {
-        transform: rotate(360deg) scale(1);
-    }
+.theme-toggle:hover.light-mode {
+    transform: rotate(180deg) scale(1.1);
 }
 
 /* Language Selector */

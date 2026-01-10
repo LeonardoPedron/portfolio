@@ -239,21 +239,15 @@ class ThemeSwitcher {
         // Set initial theme
         document.documentElement.setAttribute('data-theme', this.currentTheme);
         this.updateIcon();
+        this.updateRotation();
 
         // Toggle theme
         this.themeToggle.addEventListener('click', () => {
-            // Add clicked animation
-            this.themeToggle.classList.add('clicked');
-
-            // Remove animation class after it completes
-            setTimeout(() => {
-                this.themeToggle.classList.remove('clicked');
-            }, 500);
-
             this.currentTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', this.currentTheme);
             localStorage.setItem('theme', this.currentTheme);
             this.updateIcon();
+            this.updateRotation();
             this.animateThemeChange();
         });
     }
@@ -264,6 +258,14 @@ class ThemeSwitcher {
             icon.className = 'fas fa-moon';
         } else {
             icon.className = 'fas fa-sun';
+        }
+    }
+
+    updateRotation() {
+        if (this.currentTheme === 'light') {
+            this.themeToggle.classList.add('light-mode');
+        } else {
+            this.themeToggle.classList.remove('light-mode');
         }
     }
 
