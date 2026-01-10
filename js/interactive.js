@@ -242,6 +242,14 @@ class ThemeSwitcher {
 
         // Toggle theme
         this.themeToggle.addEventListener('click', () => {
+            // Add clicked animation
+            this.themeToggle.classList.add('clicked');
+
+            // Remove animation class after it completes
+            setTimeout(() => {
+                this.themeToggle.classList.remove('clicked');
+            }, 500);
+
             this.currentTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', this.currentTheme);
             localStorage.setItem('theme', this.currentTheme);
